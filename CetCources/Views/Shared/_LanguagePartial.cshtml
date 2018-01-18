@@ -1,0 +1,22 @@
+﻿@{ 
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+
+    var langIsEng = culture.Name.ToLower().Contains("en-us");
+
+    var hyClass = langIsEng ? "" : "lang-highlighted";
+    var enClass = langIsEng ? "lang-highlighted" : "";
+}
+
+<li>
+    @Ajax.ActionLink("Հայ", "Set",
+                        controllerName: "Language",
+                        routeValues: new { lang = "hy" },
+                        ajaxOptions: new AjaxOptions { HttpMethod = "POST", OnComplete = "reloadPage" },
+                        htmlAttributes: new { @class=hyClass })
+</li>
+<li>
+    @Ajax.ActionLink("Eng", "Set",
+                        controllerName: "Language",
+                        routeValues: new { lang = "en" },
+                        ajaxOptions: new AjaxOptions { HttpMethod = "POST", OnComplete = "reloadPage" },
+                        htmlAttributes: new { @class = enClass })

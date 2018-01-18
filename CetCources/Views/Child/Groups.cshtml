@@ -1,0 +1,133 @@
+﻿@model CetCources.Database.Child
+
+@using Resources;
+@{
+    ViewBag.Title = ChildRes.SelectGroup;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var parentId = Session[CetCources.Controllers.ChildController.ParentId] as string;
+}
+
+<h2 class="text-center">@CommonRes.Select</h2>
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h4><strong><i>@Html.DisplayFor(model => model.FullName)</i></strong> @ChildRes.SelectGroupFor</h4>
+        <div id="listGroup"></div>
+    </div>
+</div>
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("GroupId")
+
+        <section class="text-right">
+            <input type="submit" value="@CommonRes.Join" class="btn btn-success" id="btnSubmit" />
+        </section>
+    }
+</div>
+<hr />
+<h4 class="text-right">
+    @ChildRes.GroupProceedMessage
+    <a class="btn btn-primary" href="@Url.Action("Times")">@ChildRes.NextPage</a>
+</h4>
+<div>
+    @Html.ActionLink(CommonRes.PreviousStep, "Do",
+    !string.IsNullOrEmpty(parentId) ? new { id = Model.ChildId, userid = parentId }: new { id = Model.ChildId, userid = "" } ) |
+
+    @Html.ActionLink(CommonRes.BackToList, "Index", string.IsNullOrEmpty(parentId) ? null : new { userid = parentId })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var actionUrl = '@Url.Action("GroupListData", controllerName: "Child")';
+    </script>
+
+    <script src="~/Scripts/Child/ChildGroupBehaviour.js"></script>
+
+    <script type="text/x-kendo-template" id="groupTemplate">
+        <div class="group">
+            <h3> #:GroupName# </h3>
+            <h5 class="freq-info"> #= FrequencyDescription # </h5>
+            <h4 class="freq-info"> #= FillCounts # </h4>
+            <progress style="width:100%" value='#:ChildCount#' max="#:PersonCount#">
+
+                <div class="meter orange nostripes">
+                    <span style="width:100%"></span>
+                </div>
+
+            </progress>
+            <table>
+                <tbody>
+                    <tr class="table-td">
+                        # if(Sunday != null){ #
+                        <td><b>@CommonRes.Sunday</b> <br />#: Sunday #</td>
+                        # } #
+                        # if(Monday != null){ #
+                        <td><b>@CommonRes.Monday</b><br />#: Monday #</td>
+                        # } #
+                        # if(Tuesday != null){ #
+                        <td><b>@CommonRes.Tuesday</b><br />#: Tuesday #</td>
+                        # } #
+                        # if(Wednesday != null){ #
+                        <td><b>@CommonRes.Wednesday</b><br />#: Wednesday #</td>
+                        # } #
+                        # if(Thursday != null){ #
+                        <td><b>@CommonRes.Thursday</b><br />#: Thursday #</td>
+                        # } #
+                        # if(Friday != null){ #
+                        <td><b>@CommonRes.Friday</b><br />#: Friday #</td>
+                        # } #
+                        # if(Saturday != null){ #
+                        <td><b>@CommonRes.Saturday</b><br />#: Saturday #</td>
+                        # } #
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </script>
+}
+
+<style>
+    .table-td > td {
+        border: 1px solid #808080;
+        padding: 10px;
+        margin: 10px;
+        text-align: center;
+        min-width: 85px;
+    }
+
+    .group {
+        width: 330px;
+        height: 207px;
+        margin: 10px;
+        padding: 5px;
+        float: left;
+        border: 1px solid #909090;
+        text-align: center;
+        color: white;
+    }
+
+        .group:hover {
+            cursor: pointer;
+            background-color: rgba(81, 149, 243, 0.75);
+            border: 1px solid #fff;
+        }
+
+            .group:hover .table-td > td {
+                border: 1px solid #fff;
+            }
+
+    .k-state-selected {
+        background-color: #5195f3 !important;
+        border: 1px solid #fff !important;
+    }
+
+    .freq-info {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+        height: 20px;
+    }
+</style>

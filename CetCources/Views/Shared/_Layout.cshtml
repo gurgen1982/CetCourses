@@ -1,0 +1,107 @@
+﻿@using Resources
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CET Registration Application</title>
+    @Styles.Render("~/Content/css")
+
+    <link href="http://kendo.cdn.telerik.com/2017.3.913/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="http://kendo.cdn.telerik.com/2017.3.913/styles/kendo.nova.min.css" rel="stylesheet" />
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
+
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .navbar-inverse {
+            /*background-color: #ff4350;*/
+            background-image: url(../../Images/banner.png);
+            background-repeat: no-repeat;
+            height: 280px;
+            overflow: hidden;
+            background-position-x: center;
+            /*background-size: contain;*/
+            position: absolute;
+        }
+
+        .navbar-inverse .navbar-toggle {
+            border-color: #ff4350;
+        }
+
+        .navbar-inverse .navbar-toggle:hover,
+        .navbar-inverse .navbar-toggle:focus {
+            /*background-color: #f80301;*/
+            background-color: #ff4350;
+        }
+
+        ul.navbar-nav a,
+        div.navbar-header a {
+            color: white !important;
+        }
+
+        ul.navbar-nav a:hover,
+        div.navbar-header a:hover {
+            background-color: #ff4350 !important; /*  #e43c48 !important;*/
+        }
+
+        .lang-highlighted {
+            background-color: deepskyblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink(HomeRes.CETRegistration, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink(CommonRes.Children, "Index", "Child")</li>
+                    <li>@Html.ActionLink(CommonRes.About, "About", "Home")</li>
+                    <li>@Html.ActionLink(CommonRes.Contact, "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container body-content" style="margin-top:240px;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - CET Registration Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script type="text/javascript" src="http://kendo.cdn.telerik.com/2017.3.913/js/kendo.all.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+    <script>
+        var reloadPage = function () {
+            window.location.reload();
+        };
+
+        //$(window).on('scroll', function () {
+        //    var doc = document.documentElement;
+        //    var top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+        //    if (top > 25) {
+        //        $(".navbar-inverse").height(120);
+        //    }
+        //    else {
+        //        $(".navbar-inverse").height(280);
+        //    }
+        //});
+    </script>
+</body>
+</html>

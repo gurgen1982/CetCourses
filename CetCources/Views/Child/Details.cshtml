@@ -1,0 +1,164 @@
+﻿@using CetCources.Database
+@using CetCources.Models
+@model CetCources.Database.Child
+
+@using Resources;
+
+@{
+    ViewBag.Title = CommonRes.Details;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">@CommonRes.Details</h2>
+
+<div>
+    <h4 class="text-center">@ChildRes.Child</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            ID
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChildId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthDateString)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.BirthDate)*@
+            @(Model.BirthDate?.ToShortDateString())
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.YearGroup.GroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YearGroup.GroupName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ClassNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClassNo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseFrequency.FrequencyDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseFrequency.FrequencyDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Group.GroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Group.GroupName)
+        </dd>
+
+        @*<dt>
+                @Html.DisplayNameFor(model => model.School.SchoolName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.School.SchoolName)
+            </dd>*@
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inactive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inactive)
+        </dd>
+    </dl>
+    <hr />
+    <h4>@Resources.ChildRes.FreeHours</h4>
+    <div class="table-responsive">
+        <table class="table">
+            @{
+                var days = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
+                var items = (ViewBag.FreeHours as IEnumerable<ChildDayHours_Result>).ToList();
+                var isFirstRow = true;
+            }
+            @foreach (var day in days)// each day from sunday to saturday
+            {
+                var dayHours = items.Where(x => x.DayOfWeek == day);
+                if (dayHours.Count() > 0)
+                {
+                    if (isFirstRow)
+                    {
+                        <tr>
+                            <td></td>
+                            @foreach (var item in dayHours)
+                            {
+                                <td style="text-align:center;">
+                                    @Html.Label(item.HourDesc)
+                                </td>
+                            }
+                        </tr>
+                        isFirstRow = false;
+                    }
+                    <tr>
+                        <td>@Days.Day[(int)dayHours.First().DayOfWeek]</td>
+                        @foreach (var item in dayHours)
+                        {
+                            var classes = "";
+                            if (item.Inactive == true) { classes = "disabled"; }
+                            if (item.IsChecked == true) { classes = " checked"; }
+                            var id = "chk_" + item.DayOfWeek + "_" + item.DayHourId;
+                            <td class="@classes"></td>
+                        }
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+<p>
+    @Html.ActionLink(CommonRes.Edit, "Do", new { id = Model.ChildId }) |
+    @Html.ActionLink(CommonRes.BackToList, "Index")
+</p>
+
+
+<style>
+    .dl-horizontal > dt,
+    .dl-horizontal > dd {
+        padding-bottom: 10px;
+    }
+
+    tr > td {
+        border: 1px solid white !important;
+        /*border-left: 1px solid white !important;*/
+        /*border-right: 1px solid white !important;*/
+    }
+
+    tr:hover {
+        border: 1px solid #dddddd;
+    }
+
+    td:hover {
+        border: 1px solid #fff;
+        background-color: lightblue !important;
+    }
+</style>
+
+@section scripts{
+    <script>
+        $("td.checked").css("background-color", "blue");
+        $("td.disabled").css("background-color", "red");
+    </script>
+}

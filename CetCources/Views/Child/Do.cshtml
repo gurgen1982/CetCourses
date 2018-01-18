@@ -1,0 +1,197 @@
+﻿@model CetCources.Database.Child
+
+@using Resources;
+
+@{
+    if (Model == null || Model.ChildId == 0)
+    {
+        ViewBag.Title = CommonRes.Create;
+    }
+    else
+    {
+        ViewBag.Title = CommonRes.Edit;
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <h4 class="text-center">@ChildRes.Child</h4>
+        <hr />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ChildId)
+
+                @Html.HiddenFor(model => model.UserId)
+
+                @if (User.IsInRole("Admin"))
+                {
+                    if (!string.IsNullOrEmpty(ViewBag.Parent))
+                    {
+                        <h4>
+                            @ChildRes.ParentInfo: <b> @ViewBag.Parent</b>
+                        </h4>
+                        
+                        
+                        <hr />
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", @id="useComplete" } })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
+                }
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BirthDateString, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @*@Html.EditorFor(model => model.BirthDate, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control", @placeHolder = "dd/MM/yyyy" } })*@
+                        @Html.TextBoxFor(model => model.BirthDateString, new { @class = "form-control datepicker", @placeHolder = "dd/MM/yyyy", @id = "BirthDate" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.ValidationMessageFor(model => model.BirthDateString, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.YearId, ChildRes.YearId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.DropDownList("YearId", null, CommonRes.PleaseSelect, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.ValidationMessageFor(model => model.YearId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FreqId, ChildRes.FreqId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.DropDownList("FreqId", null, CommonRes.PleaseSelect, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.ValidationMessageFor(model => model.FreqId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GroupId, ChildRes.GroupId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.DropDownList("GroupId", null, optionLabel: CommonRes.PleaseSelect, htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SchoolId, ChildRes.SchoolId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @*@Html.DropDownList("SchoolId", null, htmlAttributes: new { @class = "form-control" })*@
+                        @Html.EditorFor(model => model.SchoolId, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.ValidationMessageFor(model => model.SchoolId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ClassNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.ClassNo, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.ValidationMessageFor(model => model.ClassNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Inactive, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.Inactive)
+                            @Html.ValidationMessageFor(model => model.Inactive, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control", @rows = "10" } })
+                        @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12 text-right">
+                        <input type="submit" value="@CommonRes.Next" class="btn btn-default" id="btnGoNext" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink(CommonRes.BackToList, "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var yearGroups = [];
+        @{ var i = 0; }
+        @foreach (var s in ViewBag.YearGroups)
+    {
+        @( "yearGroups[" + i++ + "] = {From:" + s.From + ", To:" + s.To + "}; " )
+    }
+        var saveText = '@CommonRes.Save';
+        var nextText = '@Html.Raw(CommonRes.Next)';
+        var freqId = @(Model!= null ? Model.FreqId : 0);
+        var fromYear = @((Model != null ? (Model.YearGroup != null ? Model.YearGroup.From :0) : 0) == 4 ? "4" : "null");
+        var parentAutoCompletePath = '@Url.Action("GetParentList", new { })';
+    </script>
+    <script src="~/Scripts/Child/Do.js"></script>
+}
+
+<style>
+    .k-datepicker, .k-dropdown {
+        width: 280px !important;
+    }
+
+    .k-maskedtextbox {
+        max-width: 280px !important;
+    }
+
+    textarea {
+        width: 280px;
+        height: 100px;
+    }
+    .k-autocomplete{
+        width: 280px;
+    }
+</style>

@@ -1,0 +1,43 @@
+﻿@model CetCources.Database.CourseFrequency
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Course Frequency</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DaysCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DaysCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FrequencyDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FrequencyDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inactive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inactive)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FreqId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

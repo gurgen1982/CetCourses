@@ -1,0 +1,76 @@
+﻿@*@model IEnumerable<CetCources.Database.Child>*@
+@model PagedList.IPagedList<CetCources.Database.Child>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of Children</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Register", controllerName: "Account", routeValues: new { area = "" }, htmlAttributes: null)
+</p>
+@using (Ajax.BeginForm("GetFilteredList", null, new AjaxOptions { OnSuccess = "", InsertionMode = InsertionMode.Replace, UpdateTargetId = "divTable" }, new { id = "filterForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-3">
+            @Html.TextBox("filterById", null, new { @placeholder = "Filter by child id", @class = "form-control" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBox("filterFullName", null, new { @placeholder = "Filter by full name", @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            @Html.DropDownList("Groups", null, "-select group-", htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            @Html.DropDownList("YearGroup", null, "-select group-", htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            @Html.DropDownList("InactiveList", null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <input type="hidden" id="page" name="page" />
+
+    </div>
+    @*<div class="form-group">
+            <div class="form-inline">
+            </div>
+        </div>*@
+}
+<div id="divTable">
+    @Html.Partial("ChildrenList", Model)
+</div>
+
+
+@section scripts{
+    <script>
+        var fullNameUrl = '@Url.Action("GetFullName")';
+        var idUrl = '@Url.Action("GetID")';
+
+        $(document).on("click", "#contentPager a", function (e) {
+            var r = $(this).attr("href");
+            var ind = r.indexOf("page=");
+            r = r.substring(ind + 5, r.length);
+            $("#page").val(r);
+            e.preventDefault();
+            e.stopPropagation();
+            $("#filterForm").submit();
+        });
+    </script>
+    <script src="~/Areas/Admin/Scripts/Children/IndexBehaviour.js"></script>
+}
+
+<style>
+    .k-autocomplete {
+        min-width: 200px;
+        width: 100%;
+    }
+
+    #filterById, #filterFullName {
+        padding-left: 7px;
+    }
+</style>

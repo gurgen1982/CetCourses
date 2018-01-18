@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNet.Identity
+@using CetCources.Extensions
+@if (Request.IsAuthenticated)
+{
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink(Resources.CommonRes.NewUser, "Register", controllerName: "Account", routeValues: new { area="" }, htmlAttributes: null)</li>
+        <li>@Html.ActionLink(Resources.CommonRes.AgeGroups, "Index", "YearGroups")</li>
+        <li>@Html.ActionLink(Resources.CommonRes.Hours, "Index", "Hours")</li>
+        <li>@Html.ActionLink(Resources.CommonRes.Frequencies, "Index", "CourseFrequencies")</li>
+        <li>@Html.ActionLink(Resources.CommonRes.Groups, "Index", "Groups")</li>
+        <li>@Html.ActionLink(Resources.CommonRes.Children, "Index", "Children")</li>
+        <li>@Html.ActionLink(Resources.CommonRes.Suggest, "Index", "SuggestedGroups")</li>
+        <li>@Html.ActionLink(Resources.CommonRes.Export, "Index", "Export")</li>
+    </ul>
+    using (Html.BeginForm("LogOff", "Account", new { area = ""}, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink(Resources.CommonRes.Hello+" "+ User.Identity.FullName() + "!", "Index", "Manage", routeValues: new { area=""}, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">@Resources.CommonRes.Logoff</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { area=""}, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

@@ -1,0 +1,391 @@
+﻿@using CetCources.Database
+@using CetCources.Models
+@using Resources
+@model Child
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    var group = ViewBag.Group as Group;
+
+}
+<style>
+    dt, dd {
+        padding: 3px;
+    }
+
+    tr > td {
+        border-top: none !important;
+    }
+
+    tr:hover {
+        border: 1px solid #dddddd;
+    }
+
+    td:hover {
+        border: 1px solid #fff;
+        background-color: lightblue !important;
+    }
+
+    td.checked, .checked {
+        background-color: blue;
+        color:white;
+        font-weight: bold;
+    }
+
+    td.disabled, .disabled {
+        background-color: red;
+        color:white;
+        font-weight: bold;
+    }
+
+    .td-group {
+        color:white;
+        font-weight: bold;
+        background-color: lightcoral;
+    }
+
+    .checked.td-group {
+        color:white;
+        font-weight: bold;
+        background: blue; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(left, blue, green, blue); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(right, blue, green, blue); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(right, blue, green, blue); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(to right, blue, green, blue); /* Standard syntax (must be last) */
+    }
+</style>
+<h2>Details</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Child</h4>
+        <p>
+            @Html.ActionLink("Edit", "Edit", "Children", routeValues: new { id = Model.ChildId }, htmlAttributes: null)
+        </p>
+        <hr />
+        <dl class="dl-horizontal">
+            <h4>
+                @Resources.ChildRes.ParentInfo
+            </h4>
+            <dt>
+                @Html.DisplayNameFor(model => model.AspNetUser.FullName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AspNetUser.FullName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AspNetUser.PhoneNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AspNetUser.PhoneNumber)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AspNetUser.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AspNetUser.Email)
+            </dd>
+            <hr />
+            <h4>
+                @Resources.ChildRes.ChildInfo
+            </h4>
+            <dt>
+                @Html.DisplayNameFor(model => model.ChildId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ChildId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FullName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FullName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.BirthDateString)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BirthDateString)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.EduLevel)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EduLevel)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseFrequency.FrequencyDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CourseFrequency.FrequencyDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Group.GroupName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Group.GroupName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.YearGroup.GroupName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.YearGroup.GroupName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SchoolId @*School.SchoolName*@)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SchoolId @*School.SchoolName*@)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ClassNo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ClassNo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Comment)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Comment)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CreationDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Inactive)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Inactive)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <h4>Group</h4>
+        <p>
+            @Html.ActionLink("Edit", "Do", "Groups", routeValues: new { id = group.GroupId }, htmlAttributes: null)
+        </p>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => group.GroupName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.GroupName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => group.PersonCount)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.PersonCount)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => group.CourseFrequency.FrequencyDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.CourseFrequency.FrequencyDescription)
+            </dd>
+
+            <dt>
+                @CommonRes.Sunday
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.HourShifts_Sun.HourShift)
+            </dd>
+
+            <dt>
+                @CommonRes.Monday
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.HourShifts_Mon.HourShift)
+            </dd>
+
+            <dt>
+                @CommonRes.Tuesday
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.HourShifts_Tue.HourShift)
+            </dd>
+
+            <dt>
+                @CommonRes.Wednesday
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.HourShifts_Wed.HourShift)
+            </dd>
+
+            <dt>
+                @CommonRes.Thursday
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.HourShifts_Thu.HourShift)
+            </dd>
+
+            <dt>
+                @CommonRes.Friday
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.HourShifts_Fri.HourShift)
+            </dd>
+
+            <dt>
+                @CommonRes.Saturday
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.HourShifts_Sat.HourShift)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => group.EduLevel)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.EduLevel)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => group.Inactive)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.Inactive)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => group.PlaceId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => group.PlaceId)
+            </dd>
+        </dl>
+
+        <hr />
+    </div>
+
+</div>
+
+<hr />
+<h4>@Resources.ChildRes.FreeHours</h4>
+<div class="table-responsive">
+    <table class="table">
+        @{
+            var days = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
+            var items = (ViewBag.FreeHours as IEnumerable<ChildDayHours_Result>).ToList();
+            var isFirstRow = true;
+        }
+        @foreach (var day in days)// each day from sunday to saturday
+        {
+            BaseHours groupDay = null;
+            switch (day)
+            {
+                case 0:
+                    groupDay = group.HourShifts_Sun?.BaseHours;
+                    break;
+                case 1:
+                    groupDay = group.HourShifts_Mon?.BaseHours;
+                    break;
+                case 2:
+                    groupDay = group.HourShifts_Tue?.BaseHours;
+                    break;
+                case 3:
+                    groupDay = group.HourShifts_Wed?.BaseHours;
+                    break;
+                case 4:
+                    groupDay = group.HourShifts_Thu?.BaseHours;
+                    break;
+                case 5:
+                    groupDay = group.HourShifts_Fri?.BaseHours;
+                    break;
+                case 6:
+                    groupDay = group.HourShifts_Sat?.BaseHours;
+                    break;
+            }
+            var dayHours = items.Where(x => x.DayOfWeek == day);
+            if (dayHours.Count() > 0)
+            {
+                if (isFirstRow)
+                {
+                    <tr>
+                        <td></td>
+                        @foreach (var item in dayHours)
+                        {
+                            <td style="text-align:center;">
+                                @Html.Label(item.HourDesc)
+                            </td>
+                        }
+                    </tr>
+                    isFirstRow = false;
+                }
+                <tr>
+                    <td>@Days.Day[(int)dayHours.First().DayOfWeek]</td>
+                    @foreach (var item in dayHours)
+                    {
+                        var classes = "";
+                        if (item.Inactive == true) { classes = "disabled"; }
+                        if (item.IsChecked == true) { classes = " checked"; }
+                        if (item.BaseHourId == (groupDay!= null ? groupDay.BaseHourId : -1)) { classes += " td-group"; }
+                        <td class="@classes"></td>
+                    }
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<section>
+    <ul>
+        <li><span class="disabled">RED</span>: CET inactive hour</li>
+        <li><span class="checked">BLUE</span>: child free hour</li>
+        <li><span class="checked td-group">BLUE WITH GREEN IN CENTER</span>: matched child free hour and group hour</li>
+        <li><span class="td-group">LIGHT RED</span>: mismatched hour</li>
+    </ul>
+</section>
+
+<hr />
+
+<h4>@GroupRes.GroupChildren</h4>
+
+@Html.Partial("~/Areas/Admin/Views/Groups/DetailsChildren.cshtml", group.Children)

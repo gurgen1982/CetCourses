@@ -1,0 +1,26 @@
+﻿@using Resources;
+@{
+    ViewBag.Title = HomeRes.HomePage;
+}
+
+<div class="jumbotron" style="color:black;">
+    <h1>@HomeRes.CETRegistration</h1>
+    <p class="lead">@HomeRes.Welcome</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>@CommonRes.SignIn</h2>
+        <p>
+            @HomeRes.YouCanLogin
+        </p>
+        <p><a class="btn btn-default" href="@Url.Action("Login", controllerName: "Account")">@CommonRes.Login</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>@CommonRes.SignUp</h2>
+        <p>@HomeRes.YouCanRegister</p>
+        <p><a class="btn btn-default" href="@Url.Action("Register", controllerName: "Account")">@CommonRes.Register</a></p>
+    </div>
+    <div class="col-md-offset-4">
+    </div>
+</div>

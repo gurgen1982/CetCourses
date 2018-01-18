@@ -1,0 +1,214 @@
+﻿@model CetCources.Database.Group
+
+@{
+    var title = ViewBag.IsEditMode ? "Edit" : "Create";
+    ViewBag.Title = title;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    var freqDayCount = [];
+    var yearGroups = [];
+    @{ var i = 0; }
+    @foreach (var s in ViewBag.FreqCourse)
+    {
+        @( "freqDayCount[" + i++ + "] = " + s.DaysCount+";" )
+    }
+    @{ i = 0; }
+    @foreach (var y in ViewBag.YearGroups)
+    {
+        var dy = "";
+        foreach (var d in y.YearGroupDays)
+        {
+            dy += d.Day + ",";
+        }
+         @( "yearGroups[" + i++ + "] = [" + dy + "]; " )
+    }
+
+    var isEditMode = @(ViewBag.IsEditMode.ToString().ToLower());
+    var yearIdFor46Group = @(ViewBag.For4_6YearGroupID);
+    var freqIdFor46Group = @(ViewBag.For4_6FreqID);
+</script>
+
+<h2>@title</h2>
+
+<div class="row">
+    <div class="col-md-5">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model=>model.GroupId)
+
+            <div class="form-horizontal">
+                <h4>Group</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GroupName, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.GroupName, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control" } })
+                        @*@Html.ValidationMessageFor(model => model.GroupName, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.YearId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("YearId", null, "-select-", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.YearId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FreqId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("FreqId", null,  "-select-", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FreqId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PersonCount, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.PersonCount, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PersonCount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Sunday, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("Sunday", null, optionLabel: "--select--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Sunday, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Monday, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("Monday", null, optionLabel: "--select--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Monday, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Tuesday, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("Tuesday", null, "--select--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Tuesday, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Wednesday, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("Wednesday", null, optionLabel: "--select--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Wednesday, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Thursday, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("Thursday", null, optionLabel: "--select--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Thursday, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Friday, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("Friday", null, optionLabel: "--select--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Friday, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Saturday, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownList("Saturday", null, optionLabel: "--select--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Saturday, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Inactive, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.Inactive)
+                            @Html.ValidationMessageFor(model => model.Inactive, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EduLevel, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.EduLevel, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.EduLevel, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PlaceId, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.PlaceId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PlaceId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MailMessage, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextAreaFor(model => model.MailMessage, new { htmlAttributes = new { @class = "form-control", rows = "10" } })
+                        @Html.ValidationMessageFor(model => model.MailMessage, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Trainer, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Trainer, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Trainer, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-3 col-md-9">
+                        @if (ViewBag.IsEditMode)
+                        {
+                            <input type="button" value="Completed" class="btn btn-success" id="btnCompleted" />
+                        }
+                        <input type="submit" 
+                               value=@(ViewBag.IsEditMode ? "Save" : "Create") 
+                               class="btn btn-primary" 
+                               style="position: absolute;right: 70px;" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-7">
+        <div id="gridChildren"></div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Areas/Admin/Scripts/Groups/behaviour.js"></script>
+}
+
+
+<style>
+    .green-background{
+        background-color:green;
+        color:white;
+        font-size:x-large;
+        text-align:center;
+    }
+
+    textarea {
+        width: 280px;
+        height: 150px;
+    }
+</style>

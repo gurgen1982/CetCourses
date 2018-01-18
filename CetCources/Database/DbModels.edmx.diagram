@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="31452808b48f4d57bf99e8b6e501856c" Name="Diagram1" ZoomLevel="100">
+        <EntityTypeShape EntityType="Database.Child" Width="1.5" PointX="5.375" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.CourseFrequency" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.FreeHour" Width="1.5" PointX="8.375" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.Group" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database.YearGroup" Width="1.5" PointX="3" PointY="15.5" IsExpanded="true" />
+        <AssociationConnector Association="Database.FK_Children_CourseFrequency" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.FK_Children_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.FK_Children_YearGroups" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.FK_FreeHours_Children" ManuallyRouted="false" />
+        <AssociationConnector Association="Database.FK_Groups_CourseFrequency" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Database.DayOfWeek" Width="1.5" PointX="8.375" PointY="6.125" />
+        <EntityTypeShape EntityType="Database.AspNetUser" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Database.YearGroupDay" Width="1.5" PointX="5.25" PointY="14.625" />
+        <AssociationConnector Association="Database.FK_YearGroupDays_YearGroups" />
+        <AssociationConnector Association="Database.FK_Children_Parent" />
+        <EntityTypeShape EntityType="Database.qExportData" Width="1.5" PointX="10.375" PointY="0.75" />
+        <AssociationConnector Association="Database.FK_Groups_YearGroups" />
+        <EntityTypeShape EntityType="Database.BaseHours" Width="1.5" PointX="10.75" PointY="10.375" />
+        <EntityTypeShape EntityType="Database.DayHours" Width="1.5" PointX="10.625" PointY="7.25" />
+        <AssociationConnector Association="Database.FK_DayHours_BaseHours" />
+        <AssociationConnector Association="Database.FK_DayHours_DayOfWeek" />
+        <AssociationConnector Association="Database.FK_FreeHours_DayHours" />
+        <EntityTypeShape EntityType="Database.HourShifts" Width="1.5" PointX="8.375" PointY="10.75" />
+        <AssociationConnector Association="Database.FK_Groups_HourShifts" />
+        <AssociationConnector Association="Database.FK_Groups_HourShifts1" />
+        <AssociationConnector Association="Database.FK_Groups_HourShifts2" />
+        <AssociationConnector Association="Database.FK_Groups_HourShifts3" />
+        <AssociationConnector Association="Database.FK_Groups_HourShifts4" />
+        <AssociationConnector Association="Database.FK_Groups_HourShifts5" />
+        <AssociationConnector Association="Database.FK_Groups_HourShifts6" />
+        <AssociationConnector Association="Database.FK_HourShifts_BaseHours" />
+        <EntityTypeShape EntityType="Database.AspNetUserRole" Width="1.5" PointX="4.875" PointY="2.875" />
+        <AssociationConnector Association="Database.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,27 @@
+﻿@using CetCources.Models
+
+@model IEnumerable<DayHoursModel>
+
+<tr>
+    <td>
+        <strong>@ViewBag.DayOfWeek</strong>
+    </td>
+    @foreach (var item in Model)
+    {
+        var id = "chk_" + item.DayOfWeek + "_" + item.HourId;
+        
+        <td>
+            <div>
+                @Html.Label(item.Hours, new { @for = id })
+                @if (item.IsChecked)
+                {
+                    @Html.CheckBox(id, new { @id = id, @checked = "checked" })
+                }
+                else
+                {
+                    @Html.CheckBox(id, new { @id = id})
+                }
+            </div>
+        </td>
+    }
+</tr>

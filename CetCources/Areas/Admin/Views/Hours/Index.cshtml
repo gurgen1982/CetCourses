@@ -1,0 +1,129 @@
+﻿@using CetCources.Database
+@using CetCources.Models
+@model IEnumerable<DayHours>
+
+@using Resources
+
+@{
+    ViewBag.Title = CommonRes.Create;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">@CommonRes.Select</h2>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="table-responsive">
+        <table class="table">
+            @{
+                var days = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
+                var items = Model.ToList();
+                var isFirstRow = true;
+            }
+            @foreach (var day in days)// each day from sunday to saturday
+            {
+                var dayHours = items.Where(x => x.DayOfWeek == day).OrderBy(x => x.BaseHours.HourDesc).ToList();
+                if (dayHours.Count() > 0)
+                {
+                    if (isFirstRow)
+                    {
+                        <tr>
+                            <td></td>
+                            @foreach (var item in dayHours)
+                            {
+                                <td style="text-align:center;">
+                                    @Html.Label(item.BaseHours.HourDesc)
+                                </td>
+                            }
+                        </tr>
+                        isFirstRow = false;
+                    }
+                    <tr>
+                        <td>@(Days.Day[dayHours.First().DayOfWeek])</td>
+                        @foreach (var item in dayHours)
+                        {
+                            var inactive = "";
+                            //if (item.Inactive == true) { inactive = "class=disabled"; }
+                            var id = "chk__" + item.DayHourId;
+                            <td @inactive style="text-align:center;">
+                                @if (item.Inactive == true)
+                                {
+                                    @Html.CheckBox(id, new { @id = id, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.CheckBox(id, new { @id = id })
+                                }
+                            </td>
+
+                        }
+                    </tr>
+                }
+            }
+
+
+        </table>
+    </div>
+    <section class="text-right">
+        <input type="submit" value="@CommonRes.Save" class="btn btn-success" />
+    </section>
+
+                }
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            //$("td.disabled > input").attr("disabled", "disabled");
+
+            $("td:has(input[type=checkbox]:checked)").css("background-color", "red");
+            $("td > input[type=checkbox]").click(function (e) {
+                $("td:has(input[type=checkbox]:not(:checked))").css("background-color", "");
+                $("td:has(input[type=checkbox]:checked)").css("background-color", "red");
+            });
+
+            $("td").click(function (e) {
+                var chk = $(this).find("input[id^='chk']").get(0);
+                if (chk != undefined && e.target != chk) {
+                    chk.checked = !chk.checked;
+                }
+                $("td:has(input[type=checkbox]:not(:checked))").css("background-color", "");
+                $("td:has(input[type=checkbox]:checked)").css("background-color", "red");
+            });
+        });
+    </script>
+}
+
+<style>
+    tr > td {
+        border-top: none !important;
+    }
+
+    tr:not(:first-child) td:not(.disabled):not(:first-child):hover {
+        background-color: white;
+        color: black;
+    }
+
+    tr:hover {
+        border: 1px solid #dddddd;
+    }
+
+    td:not(.disabled):hover,
+    td:not(.disabled) > input:hover {
+        cursor: pointer;
+    }
+
+    td.disabled {
+        background-color: red;
+        color: white;
+    }
+
+        td.disabled:hover {
+            background-color: red;
+            color: gray;
+        }
+</style>

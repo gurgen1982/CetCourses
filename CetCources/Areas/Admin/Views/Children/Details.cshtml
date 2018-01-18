@@ -1,0 +1,217 @@
+﻿@using CetCources.Database
+@using CetCources.Models
+@model Child
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    dt, dd{
+        padding: 3px;
+    }
+    tr > td {
+        border-top: none !important;
+    }
+    tr:hover{
+        border:1px solid #dddddd;
+    }
+    td:hover{
+        border:1px solid #fff;
+        background-color:lightblue !important;
+    }
+</style>
+<h2>Details</h2>
+
+<div>
+    <h4>Child</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <h4>
+            @Resources.ChildRes.ParentInfo
+        </h4>
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.PhoneNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.AspNetUser.Email, "Index", controllerName: "Child", routeValues: new {userid=Model.AspNetUser.Id, area="" }, htmlAttributes: new { @target="_blank" })
+            @*@Html.DisplayFor(model => model.AspNetUser.Email)*@
+        </dd>
+        <hr />
+        <h4>
+            @Resources.ChildRes.ChildInfo
+        </h4>
+        <dt>
+            @Html.DisplayNameFor(model => model.ChildId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChildId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthDateString)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BirthDateString)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EduLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EduLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseFrequency.FrequencyDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseFrequency.FrequencyDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Group.GroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Group.GroupName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.YearGroup.GroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YearGroup.GroupName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SchoolId @*.School.SchoolName*@)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SchoolId @*School.SchoolName*@)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ClassNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClassNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inactive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inactive)
+        </dd>
+
+    </dl>
+    <hr />
+    <h4>@Resources.ChildRes.FreeHours</h4>
+    <div class="table-responsive">
+        <table class="table">
+            @{
+                var days = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
+                var items = (ViewBag.FreeHours as IEnumerable<ChildDayHours_Result>).ToList();
+                var isFirstRow = true;
+            }
+            @foreach (var day in days)// each day from sunday to saturday
+            {
+                var dayHours = items.Where(x => x.DayOfWeek == day);
+                if (dayHours.Count() > 0)
+                {
+                    if (isFirstRow)
+                    {
+                        <tr>
+                            <td></td>
+                            @foreach (var item in dayHours)
+                            {
+                                <td style="text-align:center;">
+                                    @Html.Label(item.HourDesc)
+                                </td>
+                            }
+                        </tr>
+                        isFirstRow = false;
+                    }
+                    <tr>
+                        <td>@Days.Day[(int)dayHours.First().DayOfWeek]</td>
+                        @foreach (var item in dayHours)
+                        {
+                            var classes= "";
+                            if (item.Inactive == true) { classes = "disabled"; }
+                            if (item.IsChecked==true) { classes = " checked"; }
+                            var id = "chk_" + item.DayOfWeek + "_" + item.DayHourId;
+                            <td class="@classes">
+                                @*@if (item.IsChecked == true)
+                                {
+                                    @Html.CheckBox(id, new { @id = id, @checked = "checked", @disabled="disabled" })
+                                }
+                                else
+                                {
+                                    @Html.CheckBox(id, new { @id = id, @disabled = "disabled" })
+                                }*@
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Do", controllerName: "Child", routeValues: new { area = "", id = Model.ChildId }, htmlAttributes: new { @target = "_blank" }) |
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.ChildId }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+@section scripts{
+    <script>
+        $("td.checked").css("background-color", "blue");
+        $("td.disabled").css("background-color", "red");
+    </script>
+}

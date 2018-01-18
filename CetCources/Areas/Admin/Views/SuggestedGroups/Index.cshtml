@@ -1,0 +1,208 @@
+﻿@using CetCources.Database
+@using Resources
+@model IEnumerable<Child>
+
+@{
+    ViewBag.Title = "ListOfMatches";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    var HalfMatchedList = ViewBag.HalfMatchedList as IList<Child>;
+    var NotMatchedList = ViewBag.NotMatchedList as IList<Child>;
+}
+<style>
+    .highlight {
+        background-color: yellow;
+    }
+</style>
+
+@if (Model.Count() > 0)
+{
+    <h2>@CommonRes.FullMatch</h2>
+
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FreqId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupId)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+    {
+        <tr data-item="@item.ChildId">
+            <td>
+                <a href="@Url.Action("Details", "Children", new { area = "admin", id = item.ChildId })" target="_blank">
+                    @item.FullName
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearGroup.GroupName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseFrequency.FrequencyDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduLevel)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", "Groups", new { area = "admin", id = item.GroupId })" class="a-group" target="_blank">
+                    @item.Group.GroupName
+                </a>
+            </td>
+            <td>
+                @Ajax.ActionLink("Accept", "Accept", ajaxOptions: new AjaxOptions { HttpMethod = "post", OnSuccess = "groupAccepted" }, routeValues: new { id = item.ChildId, id2 = item.GroupId })
+            </td>
+        </tr>
+    }
+
+    </table>
+}
+
+@if (HalfMatchedList.Count > 0)
+{
+
+    <hr />
+    <h2>@CommonRes.HalfMatch</h2>
+
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FreqId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupId)
+            </th>
+            <th>
+                @GroupRes.MatchedCount
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in HalfMatchedList)
+    {
+        <tr data-item="@item.ChildId">
+            <td>
+                <a href="@Url.Action("Details", "Children", new { area = "admin", id = item.ChildId })" target="_blank">
+                    @item.FullName
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearGroup.GroupName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseFrequency.FrequencyDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduLevel)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", "Groups", new { area = "admin", id = item.GroupId })" class="a-group" target="_blank">
+                    @item.Group.GroupName
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdditionalData)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ChildId, id2 = item.GroupId })
+            </td>
+        </tr>
+    }
+
+    </table>
+}
+@if (NotMatchedList.Count > 0)
+{
+
+    <hr />
+    <h2>@CommonRes.ListUnMatch</h2>
+
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YearId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FreqId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EduLevel)
+            </th>
+        </tr>
+
+        @foreach (var item in NotMatchedList)
+    {
+        <tr>
+            <td>
+                <a href="@Url.Action("Details", "Children", new { area = "admin", id = item.ChildId })" target="_blank">
+                    @item.FullName
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearGroup.GroupName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseFrequency.FrequencyDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduLevel)
+            </td>
+        </tr>
+    }
+
+    </table>
+}
+
+
+@section scripts{
+    <script>
+        var groupAccepted = function (data) {
+            $("tr[data-item=" + data + "]").remove();
+        };
+        $.each($('a.a-group'), function (i, e) {
+            e.onmousedown = function (event) {
+                if (event.which != 3) {
+                    return;
+                }
+
+                var target = event.target.textContent.trim();
+                $.each($('a.a-group'), function (i, e) {
+                    if (e.text.trim().indexOf(target) > -1) {
+                        $(e).addClass("highlight");
+                    }
+                    else {
+                        $(e).removeClass("highlight");
+                    }
+                });
+
+                event.stopPropagation();
+                event.preventDefault()
+
+            };
+        });
+    </script>
+}

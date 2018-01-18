@@ -1,0 +1,115 @@
+﻿@model IEnumerable<CetCources.Database.Group>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List of Groups</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Do")
+</p>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GroupName)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.PersonCount)*@
+            @Resources.GroupRes.PersonCountShort
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Inactive)
+        </th>*@
+        <th>
+            @*@Html.DisplayNameFor(model => model.YearGroups.GroupName)*@
+            @Resources.CommonRes.YearGroupShort
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.CourseFrequency.FrequencyDescription)*@
+            @Resources.CommonRes.Freq
+        </th>
+        <th>
+            @Resources.CommonRes.SundayShort
+        </th>
+        <th>
+            @Resources.CommonRes.MondayShort
+        </th>
+        <th>
+            @Resources.CommonRes.TuesdayShort
+        </th>
+        <th>
+            @Resources.CommonRes.WednesdayShort
+        </th>
+        <th>
+            @Resources.CommonRes.ThursdayShort
+        </th>
+        <th>
+            @Resources.CommonRes.FridayShort
+        </th>
+        <th>
+            @Resources.CommonRes.SaturdayShort
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.EduLevel)*@
+            @Resources.CommonRes.EduLevel
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    var inactive = item.Inactive ? "danger text-muted" : "";
+    <tr class="@inactive">
+        <td>
+            @*@Html.DisplayFor(modelItem => item.GroupName)*@
+            @Html.ActionLink(item.GroupName, "Details", new { id = item.GroupId })
+            
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Children.Count)
+            /
+            @Html.DisplayFor(modelItem => item.PersonCount)
+            
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Inactive)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.YearGroups.GroupName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseFrequency.FrequencyDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HourShifts_Sun.HourShift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HourShifts_Mon.HourShift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HourShifts_Tue.HourShift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HourShifts_Wed.HourShift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HourShifts_Thu.HourShift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HourShifts_Fri.HourShift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HourShifts_Sat.HourShift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EduLevel)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Do", new { id=item.GroupId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.GroupId })
+        </td>
+    </tr>
+}
+
+</table>

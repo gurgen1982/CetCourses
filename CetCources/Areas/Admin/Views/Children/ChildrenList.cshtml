@@ -1,0 +1,97 @@
+﻿@model PagedList.IPagedList<CetCources.Database.Child>
+@using PagedList.Mvc;
+<table class="table table-hover">
+    <tr>
+        <th>
+            @*@Html.DisplayNameFor(model => model.ChildId)*@
+            @Resources.ChildRes.ChildId
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.FullName)*@
+            @Resources.ChildRes.FullName
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.BirthDateString)*@
+            @Resources.ChildRes.BirthDate
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.ClassNo)*@
+            @Resources.CommonRes.Class
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.EduLevel)*@
+            @Resources.CommonRes.EduLevel
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.CreationDate)*@
+            @Resources.ChildRes.CreationDate
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.CourseFrequency.FrequencyDescription)*@
+            @Resources.CommonRes.Freq
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Group.GroupName)*@
+            @Resources.GroupRes.GroupName
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.SchoolId @*School.SchoolName)*@
+            @Resources.ChildRes.SchoolId
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.YearGroup.GroupName)*@
+            @Resources.CommonRes.YearGroupShort
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        var inactive = item.Inactive ? "danger text-muted" : "";
+        <tr class="@inactive">
+            <td>
+                @Html.ActionLink(item.ChildId.ToString(), "Details", new { id = item.ChildId })
+                @*@Html.DisplayFor(modelItem => item.ChildId)*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @(item.BirthDate?.ToShortDateString())
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EduLevel)
+            </td>
+            <td>
+                @(item.CreationDate.ToShortDateString())
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseFrequency.FrequencyDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group.GroupName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SchoolId @*School.SchoolName*@)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearGroup.GroupName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Do", controllerName: "Child", routeValues: new { area="", id = item.ChildId }, htmlAttributes: new { @target="_blank" }) 
+                @*|*@
+                @* | @Html.ActionLink("Delete", "Delete", new { id=item.ChildId })*@
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div id="contentPager">
+@Html.PagedListPager(Model, page => Url.Action("GetFilteredList", new { page }))
+@*, PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "divTable" }))*@
+</div>
+

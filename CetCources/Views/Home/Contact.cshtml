@@ -1,0 +1,18 @@
+﻿@using Resources;
+@{
+    
+    ViewBag.Title = AboutRes.Contact;
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<address>
+    @AboutRes.Address<br />
+    @AboutRes.Yerevan<br />
+    <abbr title="@AboutRes.Phone">P:</abbr>
+    (+37491) 78 78 23
+</address>
+
+<address>
+    <strong>@AboutRes.Mail</strong>   <a href="@AboutRes.MailAddress">@AboutRes.MailAddress</a><br />
+</address>

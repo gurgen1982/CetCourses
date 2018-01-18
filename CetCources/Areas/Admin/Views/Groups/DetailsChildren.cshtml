@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CetCources.Database.Child>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.YearId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClassNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EduLevel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inactive)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BirthDateString)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.YearGroup.GroupName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClassNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EduLevel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inactive)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit",
+                   controllerName: "Children",
+                   routeValues: new { id = item.ChildId, area = "Admin" }, htmlAttributes: null)
+        </td>
+    </tr>
+}
+</table>

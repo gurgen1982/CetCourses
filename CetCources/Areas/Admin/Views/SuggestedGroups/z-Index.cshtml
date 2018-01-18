@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Group Suggestion</h2>
+
+<div id="gridGroups"></div>
+
+<div id="kdnWindow">
+    <h2>Group Suggestion's children</h2>
+
+    <div id="gridChildren"></div>
+</div>
+
+
+<div id="knd">
+</div>
+
+@section scripts{ 
+    <script>
+        var getSuggestedGroups = '@Url.Action("GetSuggestedGroups")'
+        var rowChildren = '@Url.Action("RowChildren")';
+
+
+
+        //var source = new kendo.data.DataSource({
+        //    autoBind: true,
+        //    transport: {
+        //        read: {
+        //            url: getSuggestedGroups,
+        //            dataType: "json",
+        //        }
+        //    },
+        //    requestEnd: function (e) {
+        //        var response = e.response;
+        //        //var type = e.type;
+        //        //console.log(type); // displays "read"
+        //        //console.log(response.length); // displays "77"
+        //    },
+        //    schema: {
+        //        data: "Items",
+        //        //count: 'Count',
+        //        model: {
+        //            fields: {
+        //                YearGroupName: { type: "string" },
+        //            }
+        //        }
+        //    },
+        //    pageSize: 100,
+        //    group: [{ field: "YearGroupName" }, { field: "Day" }],
+        //    //sort: [{ field: "From", dir: "asc" }]
+        //});
+
+        //$("#knd").kendoGrid({
+        //    dataSource: source,
+        //    column: [{ field: "YearGroupName" }],
+        //    dataBound: function () {
+        //        var g = $("#knd").data("kendoGrid");
+        //        //g.dataSource.group([{ field: "YearGroupName" }, { field: "Day" }]);
+        //        //g.hideColumn(0);
+        //        //g.hideColumn(1);
+        //        //g.hideColumn(4);
+        //    },
+        //    groupable: false,
+        //    selectable: "multiple row",
+        //    resizable: true,
+        //});
+
+        
+
+    </script>
+<script src="~/Areas/Admin/Scripts/Suggest/IndexBehaviour.js"></script>
+}

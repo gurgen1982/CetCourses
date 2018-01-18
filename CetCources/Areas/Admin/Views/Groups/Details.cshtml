@@ -1,0 +1,142 @@
+﻿@using Resources
+@model CetCources.Database.Group
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    dd, dt{
+        padding:3px;
+    }
+</style>
+
+<h2>Details</h2>
+
+<div>
+    <h4>Group</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupName)
+        </dd>
+
+        <dt>
+            @*@Html.DisplayNameFor(model => model.PersonCount)*@
+            @Resources.GroupRes.PersonCountLong
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonCount)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseFrequency.FrequencyDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseFrequency.FrequencyDescription)
+        </dd>
+
+        <dt>
+            @CommonRes.Sunday
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HourShifts_Sun.HourShift)
+        </dd>
+
+        <dt>
+            @CommonRes.Monday
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HourShifts_Mon.HourShift)
+        </dd>
+
+        <dt>
+            @CommonRes.Tuesday
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HourShifts_Tue.HourShift)
+        </dd>
+
+        <dt>
+            @CommonRes.Wednesday
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HourShifts_Wed.HourShift)
+        </dd>
+
+        <dt>
+            @CommonRes.Thursday
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HourShifts_Thu.HourShift)
+        </dd>
+
+        <dt>
+            @CommonRes.Friday
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HourShifts_Fri.HourShift)
+        </dd>
+
+        <dt>
+            @CommonRes.Saturday
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HourShifts_Sat.HourShift)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EduLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EduLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inactive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inactive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlaceId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlaceId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Trainer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Trainer)
+        </dd>
+    </dl>
+
+    <hr />
+    @Html.Partial("DetailsChildren", Model.Children)
+    
+</div>
+<p>
+    @Html.ActionLink("Edit", "Do", new { id = Model.GroupId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

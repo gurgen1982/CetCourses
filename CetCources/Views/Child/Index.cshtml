@@ -1,0 +1,75 @@
+﻿@model IEnumerable<CetCources.Database.Child>
+
+@using Resources;
+
+@{
+    ViewBag.Title = ChildRes.List;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">@ChildRes.List</h2>
+
+<p class="text-center">
+    @Html.ActionLink(CommonRes.AddNew, "Do",
+        routeValues: User.IsInRole("Admin") ? new { userid = ViewBag.UserId } : null,
+        htmlAttributes: new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.YearGroup.GroupName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Group.GroupName)
+            @*<span class="">
+                    (@Html.DisplayNameFor(model => model.CourseFrequency.FrequencyDescription))
+                </span>*@
+        </th>
+        @*<th>
+
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.EduLevel)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        var inactive = item.Inactive ? "danger text-muted" : "";
+        <tr class="@inactive">
+            <td>
+                @Html.DisplayFor(modelItem => item.ChildId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearGroup.GroupName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group.GroupName)
+                <small>(@Html.DisplayFor(modelItem => item.CourseFrequency.FrequencyDescription))</small>
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.CourseFrequency.FrequencyDescription)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.EduLevel)
+            </td>
+
+            <td>
+                @Html.ActionLink(CommonRes.Edit, "Do", new { id = item.ChildId }) |
+                @Html.ActionLink(CommonRes.Details, "Details", new { id = item.ChildId }) |
+                @Html.ActionLink(CommonRes.Delete, "Delete", new { id = item.ChildId })
+            </td>
+        </tr>
+    }
+
+</table>

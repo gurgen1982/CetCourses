@@ -1,0 +1,146 @@
+﻿@using CetCources.Database
+@using CetCources.Models
+@model IEnumerable<ChildDayHours_Result>
+
+@using Resources
+
+@{
+    ViewBag.Title = CommonRes.Create;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var parentId = Session[CetCources.Controllers.ChildController.ParentId] as string;
+}
+
+<h2 class="text-center">@CommonRes.Select</h2>
+
+<h4>@ChildRes.TimePageMessage</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="table-responsive">
+        <table class="table">
+            @{
+                var days = new int[] { 0, 1, 2, 3, 4, 5, 6, 7 };
+                var items = Model.ToList();
+                var isFirstRow = true;
+            }
+            @foreach (var day in days)// each day from sunday to saturday
+            {
+                var dayHours = items.Where(x => x.DayOfWeek == day);
+                if (dayHours.Count() > 0)
+                {
+                    if (isFirstRow)
+                    {
+                        <tr>
+                            <td></td>
+                            @foreach (var item in dayHours)
+                            {
+                                <td style="text-align:center;">
+                                    @Html.Label(item.HourDesc)
+                                </td>
+                            }
+                        </tr>
+                        isFirstRow = false;
+                    }
+                    <tr>
+                        <td>@(Days.Day[(int)dayHours.First().DayOfWeek])</td>
+                        @foreach (var item in dayHours)
+                        {
+                            var inactive = "";
+                            if (item.Inactive == true) { inactive = "class=disabled"; }
+                            var id = "chk_" + item.DayOfWeek + "_" + item.DayHourId;
+                            <td @inactive style="text-align:center;">
+                                @*@Html.Label(item.HourDesc, new { @for = id })*@
+                                @if (item.IsChecked == true)
+                                {
+                                    @Html.CheckBox(id, new { @id = id, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.CheckBox(id, new { @id = id })
+                                }
+                            </td>
+
+                        }
+                    </tr>
+                }
+
+                //.Where(x=>x.DayOfWeek==day)
+                //@Html.Action("DayHours", new { day = day })
+            }
+
+
+        </table>
+    </div>
+    <section class="text-right">
+        <input type="submit" value="@CommonRes.Save" class="btn btn-success" />
+    </section>
+
+}
+
+<div>
+    @Html.ActionLink(CommonRes.PreviousStep, 
+    ViewBag.NoGroup ? "Do" : "Groups",
+    routeValues: ViewBag.NoGroup ?
+    !string.IsNullOrEmpty(parentId) ? new { id = ViewBag.ChildId, userid = parentId } : new { id = ViewBag.ChildId, userid = "" }/*if Do*/
+    : null /*if Groups*/)
+     |
+    @Html.ActionLink(CommonRes.BackToList, "Index", string.IsNullOrEmpty(parentId) ? null : new { userid = parentId })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $("td.disabled > input").attr("disabled", "disabled");
+            //$("td.disabled > label").css("color", "gray");
+            $("td:has(input[type=checkbox]:checked)").css("background-color", "blue");
+            $("td:not(.disabled) > input[type=checkbox]").click(function (e) {
+                $("td:has(input[type=checkbox]:not(:checked))").css("background-color", "");
+                $("td:has(input[type=checkbox]:checked)").css("background-color", "blue");
+            });
+            $("td:not(.disabled)").click(function (e) {
+                var chk = $(this).find("input[id^='chk']").get(0);
+                if (chk != undefined && e.target != chk) {
+                    chk.checked = !chk.checked;
+                }
+                $("td:has(input[type=checkbox]:not(:checked))").css("background-color", "");
+                $("td:has(input[type=checkbox]:checked)").css("background-color", "blue");
+            });
+        });
+    </script>
+}
+
+<style>
+    tr > td {
+        border-top: none !important;
+    }
+
+    tr:not(:first-child) td:not(.disabled):not(:first-child):hover {
+        background-color: white;
+        color: black;
+    }
+
+    tr:hover {
+        border: 1px solid #dddddd;
+    }
+
+    td:not(.disabled):hover,
+    td:not(.disabled) > input:hover {
+        cursor: pointer;
+    }
+    /*td.disabled:hover,
+    td.disabled > input:hover {
+        cursor: default;
+    }*/
+    td.disabled {
+        background-color: red;
+        color: white;
+    }
+
+        td.disabled:hover {
+            background-color: red;
+            color: gray;
+        }
+</style>

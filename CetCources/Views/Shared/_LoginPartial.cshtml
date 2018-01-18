@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNet.Identity
+@using CetCources.Extensions
+@using Resources
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink(CommonRes.Hello +" " + User.Identity.FullName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = CommonRes.Manage })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">@CommonRes.Logoff</a></li>
+
+        @Html.Partial("_LanguagePartial")
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink(CommonRes.Register, "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink(CommonRes.Login, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+
+        @Html.Partial("_LanguagePartial")
+    </ul>
+}

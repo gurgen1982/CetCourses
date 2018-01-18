@@ -1,0 +1,1413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Database.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" />
+          <Property Name="Comments" Type="nvarchar(max)" />
+          <Property Name="TermsAccepted" Type="bit" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BaseHours">
+          <Key>
+            <PropertyRef Name="BaseHourId" />
+          </Key>
+          <Property Name="BaseHourId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HourDesc" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Children">
+          <Key>
+            <PropertyRef Name="ChildId" />
+          </Key>
+          <Property Name="ChildId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="YearId" Type="int" />
+          <Property Name="SchoolId" Type="nvarchar" MaxLength="255" />
+          <Property Name="ClassNo" Type="int" Nullable="false" />
+          <Property Name="FreqId" Type="int" />
+          <Property Name="GroupId" Type="int" />
+          <Property Name="EduLevel" Type="int" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="Inactive" Type="bit" Nullable="false" />
+          <Property Name="Comment" Type="text" />
+        </EntityType>
+        <EntityType Name="CourseFrequency">
+          <Key>
+            <PropertyRef Name="FreqId" />
+          </Key>
+          <Property Name="FreqId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DaysCount" Type="smallint" />
+          <Property Name="FrequencyDescription" Type="nvarchar" MaxLength="50" />
+          <Property Name="Inactive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DayHours">
+          <Key>
+            <PropertyRef Name="DayHourId" />
+          </Key>
+          <Property Name="DayHourId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DayOfWeek" Type="int" Nullable="false" />
+          <Property Name="BaseHourId" Type="int" Nullable="false" />
+          <Property Name="Inactive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DayOfWeek">
+          <Key>
+            <PropertyRef Name="DayOfWeek" />
+          </Key>
+          <Property Name="DayOfWeek" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Day" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="FreeHours">
+          <Key>
+            <PropertyRef Name="FreeHourId" />
+          </Key>
+          <Property Name="FreeHourId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChildId" Type="int" Nullable="false" />
+          <Property Name="DayHourId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YearId" Type="int" />
+          <Property Name="FreqId" Type="int" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PersonCount" Type="int" />
+          <Property Name="Inactive" Type="bit" Nullable="false" />
+          <Property Name="PlaceId" Type="int" />
+          <Property Name="Sunday" Type="int" />
+          <Property Name="Monday" Type="int" />
+          <Property Name="Tuesday" Type="int" />
+          <Property Name="Wednesday" Type="int" />
+          <Property Name="Thursday" Type="int" />
+          <Property Name="Friday" Type="int" />
+          <Property Name="Saturday" Type="int" />
+          <Property Name="EduLevel" Type="int" />
+          <Property Name="CreationDate" Type="datetime" />
+          <Property Name="Trainer" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="HourShifts">
+          <Key>
+            <PropertyRef Name="ShiftId" />
+          </Key>
+          <Property Name="ShiftId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BaseHourId" Type="int" />
+          <Property Name="StartHourShifted" Type="float" />
+          <Property Name="HourShift" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Cet.dbo.qExportData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="qExportData">
+          <Key>
+            <PropertyRef Name="ChildId" />
+            <PropertyRef Name="Child Creation Date" />
+            <PropertyRef Name="Children Full Name" />
+            <PropertyRef Name="Birth Date" />
+            <PropertyRef Name="ClassNo" />
+            <PropertyRef Name="Edu Level" />
+            <PropertyRef Name="Inactive" />
+            <PropertyRef Name="Terms Accepted" />
+          </Key>
+          <Property Name="ChildId" Type="int" Nullable="false" />
+          <Property Name="Child Creation Date" Type="datetime" Nullable="false" />
+          <Property Name="Parent Full Name" Type="nvarchar(max)" />
+          <Property Name="Phone Number" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="Children Full Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Birth Date" Type="date" Nullable="false" />
+          <Property Name="Year Group Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="EduGroupName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Frequency Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="School Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClassNo" Type="int" Nullable="false" />
+          <Property Name="Edu Level" Type="int" Nullable="false" />
+          <Property Name="Monday" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Tuesday" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Wednesday" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Thursday" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Friday" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Saturday" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Sunday" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Trainer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Inactive" Type="bit" Nullable="false" />
+          <Property Name="Child Related Comment" Type="text" />
+          <Property Name="Parent Related Comment" Type="nvarchar(max)" />
+          <Property Name="Terms Accepted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="YearGroupDays">
+          <Key>
+            <PropertyRef Name="YGDayId" />
+          </Key>
+          <Property Name="YGDayId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YearGroupId" Type="int" Nullable="false" />
+          <Property Name="Day" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="YearGroups">
+          <Key>
+            <PropertyRef Name="YearGroupId" />
+          </Key>
+          <Property Name="YearGroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
+          <Property Name="From" Type="int" Nullable="false" />
+          <Property Name="To" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Children_CourseFrequency">
+          <End Role="CourseFrequency" Type="Self.CourseFrequency" Multiplicity="0..1" />
+          <End Role="Children" Type="Self.Children" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseFrequency">
+              <PropertyRef Name="FreqId" />
+            </Principal>
+            <Dependent Role="Children">
+              <PropertyRef Name="FreqId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Children_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="0..1" />
+          <End Role="Children" Type="Self.Children" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="Children">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Children_Parent">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Children" Type="Self.Children" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Children">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Children_YearGroups">
+          <End Role="YearGroups" Type="Self.YearGroups" Multiplicity="0..1" />
+          <End Role="Children" Type="Self.Children" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YearGroups">
+              <PropertyRef Name="YearGroupId" />
+            </Principal>
+            <Dependent Role="Children">
+              <PropertyRef Name="YearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DayHours_BaseHours">
+          <End Role="BaseHours" Type="Self.BaseHours" Multiplicity="1" />
+          <End Role="DayHours" Type="Self.DayHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseHours">
+              <PropertyRef Name="BaseHourId" />
+            </Principal>
+            <Dependent Role="DayHours">
+              <PropertyRef Name="BaseHourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DayHours_DayOfWeek">
+          <End Role="DayOfWeek" Type="Self.DayOfWeek" Multiplicity="1" />
+          <End Role="DayHours" Type="Self.DayHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DayOfWeek">
+              <PropertyRef Name="DayOfWeek" />
+            </Principal>
+            <Dependent Role="DayHours">
+              <PropertyRef Name="DayOfWeek" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FreeHours_Children">
+          <End Role="Children" Type="Self.Children" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FreeHours" Type="Self.FreeHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Children">
+              <PropertyRef Name="ChildId" />
+            </Principal>
+            <Dependent Role="FreeHours">
+              <PropertyRef Name="ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FreeHours_DayHours">
+          <End Role="DayHours" Type="Self.DayHours" Multiplicity="1" />
+          <End Role="FreeHours" Type="Self.FreeHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DayHours">
+              <PropertyRef Name="DayHourId" />
+            </Principal>
+            <Dependent Role="FreeHours">
+              <PropertyRef Name="DayHourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_CourseFrequency">
+          <End Role="CourseFrequency" Type="Self.CourseFrequency" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseFrequency">
+              <PropertyRef Name="FreqId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="FreqId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts">
+          <End Role="HourShifts" Type="Self.HourShifts" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="Sunday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts1">
+          <End Role="HourShifts" Type="Self.HourShifts" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="Monday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts2">
+          <End Role="HourShifts" Type="Self.HourShifts" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="Tuesday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts3">
+          <End Role="HourShifts" Type="Self.HourShifts" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="Wednesday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts4">
+          <End Role="HourShifts" Type="Self.HourShifts" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="Thursday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts5">
+          <End Role="HourShifts" Type="Self.HourShifts" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="Friday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts6">
+          <End Role="HourShifts" Type="Self.HourShifts" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="Saturday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_YearGroups">
+          <End Role="YearGroups" Type="Self.YearGroups" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YearGroups">
+              <PropertyRef Name="YearGroupId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="YearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HourShifts_BaseHours">
+          <End Role="BaseHours" Type="Self.BaseHours" Multiplicity="0..1" />
+          <End Role="HourShifts" Type="Self.HourShifts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseHours">
+              <PropertyRef Name="BaseHourId" />
+            </Principal>
+            <Dependent Role="HourShifts">
+              <PropertyRef Name="BaseHourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_YearGroupDays_YearGroups">
+          <End Role="YearGroups" Type="Self.YearGroups" Multiplicity="1" />
+          <End Role="YearGroupDays" Type="Self.YearGroupDays" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YearGroups">
+              <PropertyRef Name="YearGroupId" />
+            </Principal>
+            <Dependent Role="YearGroupDays">
+              <PropertyRef Name="YearGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ChildDayHours" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="childid" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="DayOfWeek" Type="int" />
+                <Property Name="Day" Type="nvarchar" MaxLength="50" />
+                <Property Name="HourDesc" Type="nvarchar" MaxLength="50" />
+                <Property Name="DayHourId" Type="int" />
+                <Property Name="BaseHourId" Type="int" />
+                <Property Name="IsChecked" Type="bit" />
+                <Property Name="Inactive" Type="bit" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="ExportData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="MatchingChildrenByHours" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="yearid" Type="int" Mode="In" />
+          <Parameter Name="freqid" Type="int" Mode="In" />
+          <Parameter Name="edulevel" Type="int" Mode="In" />
+          <Parameter Name="sunday" Type="float" Mode="In" />
+          <Parameter Name="monday" Type="float" Mode="In" />
+          <Parameter Name="tuesday" Type="float" Mode="In" />
+          <Parameter Name="wednesday" Type="float" Mode="In" />
+          <Parameter Name="thursday" Type="float" Mode="In" />
+          <Parameter Name="friday" Type="float" Mode="In" />
+          <Parameter Name="saturday" Type="float" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="HourDesc" Type="nvarchar" MaxLength="50" />
+                <Property Name="Sunday" Type="int" />
+                <Property Name="Monday" Type="int" />
+                <Property Name="Tuesday" Type="int" />
+                <Property Name="Wednesday" Type="int" />
+                <Property Name="Thursday" Type="int" />
+                <Property Name="Friday" Type="int" />
+                <Property Name="Saturday" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="DatabaseStoreContainer">
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaseHours" EntityType="Self.BaseHours" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Children" EntityType="Self.Children" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CourseFrequency" EntityType="Self.CourseFrequency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DayHours" EntityType="Self.DayHours" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DayOfWeek" EntityType="Self.DayOfWeek" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FreeHours" EntityType="Self.FreeHours" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HourShifts" EntityType="Self.HourShifts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YearGroupDays" EntityType="Self.YearGroupDays" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YearGroups" EntityType="Self.YearGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="qExportData" EntityType="Self.qExportData" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [qExportData].[ChildId] AS [ChildId], 
+    [qExportData].[Child Creation Date] AS [Child Creation Date], 
+    [qExportData].[Parent Full Name] AS [Parent Full Name], 
+    [qExportData].[Phone Number] AS [Phone Number], 
+    [qExportData].[Email] AS [Email], 
+    [qExportData].[Children Full Name] AS [Children Full Name], 
+    [qExportData].[Birth Date] AS [Birth Date], 
+    [qExportData].[Year Group Name] AS [Year Group Name], 
+    [qExportData].[EduGroupName] AS [EduGroupName], 
+    [qExportData].[Frequency Description] AS [Frequency Description], 
+    [qExportData].[School Name] AS [School Name], 
+    [qExportData].[ClassNo] AS [ClassNo], 
+    [qExportData].[Edu Level] AS [Edu Level], 
+    [qExportData].[Monday] AS [Monday], 
+    [qExportData].[Tuesday] AS [Tuesday], 
+    [qExportData].[Wednesday] AS [Wednesday], 
+    [qExportData].[Thursday] AS [Thursday], 
+    [qExportData].[Friday] AS [Friday], 
+    [qExportData].[Saturday] AS [Saturday], 
+    [qExportData].[Sunday] AS [Sunday], 
+    [qExportData].[Trainer] AS [Trainer], 
+    [qExportData].[Inactive] AS [Inactive], 
+    [qExportData].[Child Related Comment] AS [Child Related Comment], 
+    [qExportData].[Parent Related Comment] AS [Parent Related Comment], 
+    [qExportData].[Terms Accepted] AS [Terms Accepted]
+    FROM [dbo].[qExportData] AS [qExportData]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Children_CourseFrequency" Association="Self.FK_Children_CourseFrequency">
+            <End Role="CourseFrequency" EntitySet="CourseFrequency" />
+            <End Role="Children" EntitySet="Children" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Children_Groups" Association="Self.FK_Children_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Children" EntitySet="Children" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Children_Parent" Association="Self.FK_Children_Parent">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Children" EntitySet="Children" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Children_YearGroups" Association="Self.FK_Children_YearGroups">
+            <End Role="YearGroups" EntitySet="YearGroups" />
+            <End Role="Children" EntitySet="Children" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DayHours_BaseHours" Association="Self.FK_DayHours_BaseHours">
+            <End Role="BaseHours" EntitySet="BaseHours" />
+            <End Role="DayHours" EntitySet="DayHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DayHours_DayOfWeek" Association="Self.FK_DayHours_DayOfWeek">
+            <End Role="DayOfWeek" EntitySet="DayOfWeek" />
+            <End Role="DayHours" EntitySet="DayHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FreeHours_Children" Association="Self.FK_FreeHours_Children">
+            <End Role="Children" EntitySet="Children" />
+            <End Role="FreeHours" EntitySet="FreeHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FreeHours_DayHours" Association="Self.FK_FreeHours_DayHours">
+            <End Role="DayHours" EntitySet="DayHours" />
+            <End Role="FreeHours" EntitySet="FreeHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_CourseFrequency" Association="Self.FK_Groups_CourseFrequency">
+            <End Role="CourseFrequency" EntitySet="CourseFrequency" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts" Association="Self.FK_Groups_HourShifts">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts1" Association="Self.FK_Groups_HourShifts1">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts2" Association="Self.FK_Groups_HourShifts2">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts3" Association="Self.FK_Groups_HourShifts3">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts4" Association="Self.FK_Groups_HourShifts4">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts5" Association="Self.FK_Groups_HourShifts5">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts6" Association="Self.FK_Groups_HourShifts6">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_YearGroups" Association="Self.FK_Groups_YearGroups">
+            <End Role="YearGroups" EntitySet="YearGroups" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HourShifts_BaseHours" Association="Self.FK_HourShifts_BaseHours">
+            <End Role="BaseHours" EntitySet="BaseHours" />
+            <End Role="HourShifts" EntitySet="HourShifts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_YearGroupDays_YearGroups" Association="Self.FK_YearGroupDays_YearGroups">
+            <End Role="YearGroups" EntitySet="YearGroups" />
+            <End Role="YearGroupDays" EntitySet="YearGroupDays" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Child">
+          <Key>
+            <PropertyRef Name="ChildId" />
+          </Key>
+          <Property Name="ChildId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="YearId" Type="Int32" />
+          <Property Name="SchoolId" Type="String" />
+          <Property Name="ClassNo" Type="Int32" Nullable="false" />
+          <Property Name="FreqId" Type="Int32" />
+          <Property Name="GroupId" Type="Int32" />
+          <Property Name="EduLevel" Type="Int32" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Inactive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CourseFrequency" Relationship="Self.FK_Children_CourseFrequency" FromRole="Children" ToRole="CourseFrequency" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_Children_Groups" FromRole="Children" ToRole="Groups" />
+          <NavigationProperty Name="YearGroup" Relationship="Self.FK_Children_YearGroups" FromRole="Children" ToRole="YearGroups" />
+          <NavigationProperty Name="FreeHours" Relationship="Self.FK_FreeHours_Children" FromRole="Children" ToRole="FreeHours" />
+          <NavigationProperty Name="AspNetUser" Relationship="Database.FK_Children_Parent" FromRole="Child" ToRole="AspNetUser" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CourseFrequency">
+          <Key>
+            <PropertyRef Name="FreqId" />
+          </Key>
+          <Property Name="FreqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DaysCount" Type="Int16" />
+          <Property Name="FrequencyDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Inactive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Children" Relationship="Self.FK_Children_CourseFrequency" FromRole="CourseFrequency" ToRole="Children" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK_Groups_CourseFrequency" FromRole="CourseFrequency" ToRole="Groups" />
+        </EntityType>
+        <EntityType Name="FreeHour">
+          <Key>
+            <PropertyRef Name="FreeHourId" />
+          </Key>
+          <Property Name="FreeHourId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChildId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Child" Relationship="Self.FK_FreeHours_Children" FromRole="FreeHours" ToRole="Children" />
+          <Property Name="DayHourId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DayHours" Relationship="Database.FK_FreeHours_DayHours" FromRole="FreeHour" ToRole="DayHours" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FreqId" Type="Int32" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PersonCount" Type="Int32" />
+          <Property Name="Inactive" Type="Boolean" Nullable="false" />
+          <Property Name="PlaceId" Type="Int32" />
+          <Property Name="Sunday" Type="Int32" />
+          <Property Name="Monday" Type="Int32" />
+          <Property Name="Tuesday" Type="Int32" />
+          <Property Name="Wednesday" Type="Int32" />
+          <Property Name="Thursday" Type="Int32" />
+          <Property Name="Friday" Type="Int32" />
+          <Property Name="Saturday" Type="Int32" />
+          <NavigationProperty Name="Children" Relationship="Self.FK_Children_Groups" FromRole="Groups" ToRole="Children" />
+          <NavigationProperty Name="CourseFrequency" Relationship="Self.FK_Groups_CourseFrequency" FromRole="Groups" ToRole="CourseFrequency" />
+          <Property Name="YearId" Type="Int32" />
+          <NavigationProperty Name="YearGroups" Relationship="Database.FK_Groups_YearGroups" FromRole="Group" ToRole="YearGroup" />
+          <Property Name="EduLevel" Type="Int32" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <Property Name="Trainer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HourShifts_Sun" Relationship="Database.FK_Groups_HourShifts" FromRole="Group" ToRole="HourShifts" />
+          <NavigationProperty Name="HourShifts_Mon" Relationship="Database.FK_Groups_HourShifts1" FromRole="Group" ToRole="HourShifts" />
+          <NavigationProperty Name="HourShifts_Tue" Relationship="Database.FK_Groups_HourShifts2" FromRole="Group" ToRole="HourShifts" />
+          <NavigationProperty Name="HourShifts_Wed" Relationship="Database.FK_Groups_HourShifts3" FromRole="Group" ToRole="HourShifts" />
+          <NavigationProperty Name="HourShifts_Thu" Relationship="Database.FK_Groups_HourShifts4" FromRole="Group" ToRole="HourShifts" />
+          <NavigationProperty Name="HourShifts_Fri" Relationship="Database.FK_Groups_HourShifts5" FromRole="Group" ToRole="HourShifts" />
+          <NavigationProperty Name="HourShifts_Sat" Relationship="Database.FK_Groups_HourShifts6" FromRole="Group" ToRole="HourShifts" />
+        </EntityType>
+        <EntityType Name="YearGroup">
+          <Key>
+            <PropertyRef Name="YearGroupId" />
+          </Key>
+          <Property Name="YearGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Children" Relationship="Self.FK_Children_YearGroups" FromRole="YearGroups" ToRole="Children" />
+          <Property Name="From" Type="Int32" Nullable="false" />
+          <Property Name="To" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="YearGroupDays" Relationship="Database.FK_YearGroupDays_YearGroups" FromRole="YearGroup" ToRole="YearGroupDay" />
+          <NavigationProperty Name="Groups" Relationship="Database.FK_Groups_YearGroups" FromRole="YearGroup" ToRole="Group" />
+        </EntityType>
+        <Association Name="FK_Children_CourseFrequency">
+          <End Role="CourseFrequency" Type="Self.CourseFrequency" Multiplicity="0..1" />
+          <End Role="Children" Type="Self.Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseFrequency">
+              <PropertyRef Name="FreqId" />
+            </Principal>
+            <Dependent Role="Children">
+              <PropertyRef Name="FreqId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Children_Groups">
+          <End Role="Groups" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="Children" Type="Self.Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="Children">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Children_YearGroups">
+          <End Role="YearGroups" Type="Self.YearGroup" Multiplicity="0..1" />
+          <End Role="Children" Type="Self.Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YearGroups">
+              <PropertyRef Name="YearGroupId" />
+            </Principal>
+            <Dependent Role="Children">
+              <PropertyRef Name="YearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FreeHours_Children">
+          <End Role="Children" Type="Self.Child" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FreeHours" Type="Self.FreeHour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Children">
+              <PropertyRef Name="ChildId" />
+            </Principal>
+            <Dependent Role="FreeHours">
+              <PropertyRef Name="ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_CourseFrequency">
+          <End Role="CourseFrequency" Type="Self.CourseFrequency" Multiplicity="0..1" />
+          <End Role="Groups" Type="Self.Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseFrequency">
+              <PropertyRef Name="FreqId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="FreqId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Children" EntityType="Self.Child" />
+          <EntitySet Name="CourseFrequencies" EntityType="Self.CourseFrequency" />
+          <EntitySet Name="FreeHours" EntityType="Self.FreeHour" />
+          <EntitySet Name="Groups" EntityType="Self.Group" />
+          <EntitySet Name="YearGroups" EntityType="Self.YearGroup" />
+          <AssociationSet Name="FK_Children_CourseFrequency" Association="Self.FK_Children_CourseFrequency">
+            <End Role="CourseFrequency" EntitySet="CourseFrequencies" />
+            <End Role="Children" EntitySet="Children" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Children_Groups" Association="Self.FK_Children_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Children" EntitySet="Children" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Children_YearGroups" Association="Self.FK_Children_YearGroups">
+            <End Role="YearGroups" EntitySet="YearGroups" />
+            <End Role="Children" EntitySet="Children" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FreeHours_Children" Association="Self.FK_FreeHours_Children">
+            <End Role="Children" EntitySet="Children" />
+            <End Role="FreeHours" EntitySet="FreeHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_CourseFrequency" Association="Self.FK_Groups_CourseFrequency">
+            <End Role="CourseFrequency" EntitySet="CourseFrequencies" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <EntitySet Name="DayOfWeeks" EntityType="Database.DayOfWeek" />
+          <EntitySet Name="AspNetUsers" EntityType="Database.AspNetUser" />
+          <EntitySet Name="YearGroupDays" EntityType="Database.YearGroupDay" />
+          <AssociationSet Name="FK_YearGroupDays_YearGroups" Association="Database.FK_YearGroupDays_YearGroups">
+            <End Role="YearGroup" EntitySet="YearGroups" />
+            <End Role="YearGroupDay" EntitySet="YearGroupDays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Children_Parent" Association="Database.FK_Children_Parent">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Child" EntitySet="Children" />
+          </AssociationSet>
+          <FunctionImport Name="ExportData" />
+          <EntitySet Name="qExportData" EntityType="Database.qExportData" />
+          <AssociationSet Name="FK_Groups_YearGroups" Association="Database.FK_Groups_YearGroups">
+            <End Role="YearGroup" EntitySet="YearGroups" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <EntitySet Name="BaseHours" EntityType="Database.BaseHours" />
+          <EntitySet Name="DayHours" EntityType="Database.DayHours" />
+          <AssociationSet Name="FK_DayHours_BaseHours" Association="Database.FK_DayHours_BaseHours">
+            <End Role="BaseHours" EntitySet="BaseHours" />
+            <End Role="DayHours" EntitySet="DayHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DayHours_DayOfWeek" Association="Database.FK_DayHours_DayOfWeek">
+            <End Role="DayOfWeek" EntitySet="DayOfWeeks" />
+            <End Role="DayHours" EntitySet="DayHours" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FreeHours_DayHours" Association="Database.FK_FreeHours_DayHours">
+            <End Role="DayHours" EntitySet="DayHours" />
+            <End Role="FreeHour" EntitySet="FreeHours" />
+          </AssociationSet>
+          <FunctionImport Name="MatchingChildrenByHours" IsComposable="true" ReturnType="Collection(Database.MatchingChildrenByHours_Result)">
+            <Parameter Name="yearid" Mode="In" Type="Int32" />
+            <Parameter Name="freqid" Mode="In" Type="Int32" />
+            <Parameter Name="edulevel" Mode="In" Type="Int32" />
+            <Parameter Name="sunday" Mode="In" Type="Double" />
+            <Parameter Name="monday" Mode="In" Type="Double" />
+            <Parameter Name="tuesday" Mode="In" Type="Double" />
+            <Parameter Name="wednesday" Mode="In" Type="Double" />
+            <Parameter Name="thursday" Mode="In" Type="Double" />
+            <Parameter Name="friday" Mode="In" Type="Double" />
+            <Parameter Name="saturday" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="ChildDayHours" IsComposable="true" ReturnType="Collection(Database.ChildDayHours_Result)">
+          <Parameter Name="childid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="HourShifts" EntityType="Database.HourShifts" />
+          <AssociationSet Name="FK_Groups_HourShifts" Association="Database.FK_Groups_HourShifts">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts1" Association="Database.FK_Groups_HourShifts1">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts2" Association="Database.FK_Groups_HourShifts2">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts3" Association="Database.FK_Groups_HourShifts3">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts4" Association="Database.FK_Groups_HourShifts4">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts5" Association="Database.FK_Groups_HourShifts5">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Groups_HourShifts6" Association="Database.FK_Groups_HourShifts6">
+            <End Role="HourShifts" EntitySet="HourShifts" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HourShifts_BaseHours" Association="Database.FK_HourShifts_BaseHours">
+            <End Role="BaseHours" EntitySet="BaseHours" />
+            <End Role="HourShifts" EntitySet="HourShifts" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUserRoles" EntityType="Database.AspNetUserRole" />
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Database.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRole" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="DayOfWeek">
+          <Key>
+            <PropertyRef Name="TheDay" />
+          </Key>
+          <Property Name="TheDay" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Day" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DayHours" Relationship="Database.FK_DayHours_DayOfWeek" FromRole="DayOfWeek" ToRole="DayHours" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TermsAccepted" Type="Boolean" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Children" Relationship="Database.FK_Children_Parent" FromRole="AspNetUser" ToRole="Child" />
+          <NavigationProperty Name="AspNetUserRoles" Relationship="Database.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserRole" />
+        </EntityType>
+        <EntityType Name="YearGroupDay">
+          <Key>
+            <PropertyRef Name="YGDayId" />
+          </Key>
+          <Property Name="YGDayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YearGroupId" Type="Int32" Nullable="false" />
+          <Property Name="Day" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="YearGroup" Relationship="Database.FK_YearGroupDays_YearGroups" FromRole="YearGroupDay" ToRole="YearGroup" />
+        </EntityType>
+        <Association Name="FK_YearGroupDays_YearGroups">
+          <End Type="Database.YearGroup" Role="YearGroup" Multiplicity="1" />
+          <End Type="Database.YearGroupDay" Role="YearGroupDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YearGroup">
+              <PropertyRef Name="YearGroupId" />
+            </Principal>
+            <Dependent Role="YearGroupDay">
+              <PropertyRef Name="YearGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Children_Parent">
+          <End Type="Database.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="Database.Child" Role="Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Child">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="qExportData">
+          <Key>
+            <PropertyRef Name="Children_Full_Name" />
+            <PropertyRef Name="Birth_Date" />
+            <PropertyRef Name="ClassNo" />
+            <PropertyRef Name="Edu_Level" />
+            <PropertyRef Name="Inactive" />
+            <PropertyRef Name="Terms_Accepted" />
+            <PropertyRef Name="Child_Creation_Date" />
+            <PropertyRef Name="ChildId" />
+          </Key>
+          <Property Name="ChildId" Type="Int32" Nullable="false" />
+          <Property Name="Child_Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Parent_Full_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone_Number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Children_Full_Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Birth_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Year_Group_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Edu_Group_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Frequency_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="School_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClassNo" Type="Int32" Nullable="false" />
+          <Property Name="Edu_Level" Type="Int32" Nullable="false" />
+          <Property Name="Monday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Tuesday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Wednesday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Thursday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Friday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Saturday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Sunday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Trainer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Inactive" Type="Boolean" Nullable="false" />
+          <Property Name="Child_Related_Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Parent_Related_Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Terms_Accepted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Groups_YearGroups">
+          <End Type="Database.YearGroup" Role="YearGroup" Multiplicity="0..1" />
+          <End Type="Database.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YearGroup">
+              <PropertyRef Name="YearGroupId" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="YearId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BaseHours">
+          <Key>
+            <PropertyRef Name="BaseHourId" />
+          </Key>
+          <Property Name="BaseHourId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HourDesc" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DayHours" Relationship="Database.FK_DayHours_BaseHours" FromRole="BaseHours" ToRole="DayHours" />
+          <NavigationProperty Name="HourShifts" Relationship="Database.FK_HourShifts_BaseHours" FromRole="BaseHours" ToRole="HourShifts" />
+        </EntityType>
+        <EntityType Name="DayHours">
+          <Key>
+            <PropertyRef Name="DayHourId" />
+          </Key>
+          <Property Name="DayHourId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DayOfWeek" Type="Int32" Nullable="false" />
+          <Property Name="BaseHourId" Type="Int32" Nullable="false" />
+          <Property Name="Inactive" Type="Boolean" DefaultValue="False" Nullable="false" />
+          <NavigationProperty Name="BaseHours" Relationship="Database.FK_DayHours_BaseHours" FromRole="DayHours" ToRole="BaseHours" />
+          <NavigationProperty Name="TheDay" Relationship="Database.FK_DayHours_DayOfWeek" FromRole="DayHours" ToRole="DayOfWeek" />
+          <NavigationProperty Name="FreeHours" Relationship="Database.FK_FreeHours_DayHours" FromRole="DayHours" ToRole="FreeHour" />
+        </EntityType>
+        <Association Name="FK_DayHours_BaseHours">
+          <End Type="Database.BaseHours" Role="BaseHours" Multiplicity="1" />
+          <End Type="Database.DayHours" Role="DayHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseHours">
+              <PropertyRef Name="BaseHourId" />
+            </Principal>
+            <Dependent Role="DayHours">
+              <PropertyRef Name="BaseHourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DayHours_DayOfWeek">
+          <End Type="Database.DayOfWeek" Role="DayOfWeek" Multiplicity="1" />
+          <End Type="Database.DayHours" Role="DayHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DayOfWeek">
+              <PropertyRef Name="TheDay" />
+            </Principal>
+            <Dependent Role="DayHours">
+              <PropertyRef Name="DayOfWeek" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FreeHours_DayHours">
+          <End Type="Database.DayHours" Role="DayHours" Multiplicity="1" />
+          <End Type="Database.FreeHour" Role="FreeHour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DayHours">
+              <PropertyRef Name="DayHourId" />
+            </Principal>
+            <Dependent Role="FreeHour">
+              <PropertyRef Name="DayHourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="MatchingChildrenByHours_Result">
+          <Property Type="String" Name="HourDesc" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Sunday" Nullable="true" />
+          <Property Type="Int32" Name="Monday" Nullable="true" />
+          <Property Type="Int32" Name="Tuesday" Nullable="true" />
+          <Property Type="Int32" Name="Wednesday" Nullable="true" />
+          <Property Type="Int32" Name="Thursday" Nullable="true" />
+          <Property Type="Int32" Name="Friday" Nullable="true" />
+          <Property Type="Int32" Name="Saturday" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ChildDayHours_Result">
+          <Property Type="Int32" Name="DayOfWeek" Nullable="true" />
+          <Property Type="String" Name="Day" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HourDesc" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DayHourId" Nullable="true" />
+          <Property Type="Int32" Name="BaseHourId" Nullable="true" />
+          <Property Type="Boolean" Name="IsChecked" Nullable="true" />
+          <Property Type="Boolean" Name="Inactive" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="HourShifts">
+          <Key>
+            <PropertyRef Name="ShiftId" />
+          </Key>
+          <Property Name="ShiftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaseHourId" Type="Int32" />
+          <Property Name="StartHourShifted" Type="Double" />
+          <Property Name="HourShift" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Groups" Relationship="Database.FK_Groups_HourShifts" FromRole="HourShifts" ToRole="Group" />
+          <NavigationProperty Name="Groups1" Relationship="Database.FK_Groups_HourShifts1" FromRole="HourShifts" ToRole="Group" />
+          <NavigationProperty Name="Groups2" Relationship="Database.FK_Groups_HourShifts2" FromRole="HourShifts" ToRole="Group" />
+          <NavigationProperty Name="Groups3" Relationship="Database.FK_Groups_HourShifts3" FromRole="HourShifts" ToRole="Group" />
+          <NavigationProperty Name="Groups4" Relationship="Database.FK_Groups_HourShifts4" FromRole="HourShifts" ToRole="Group" />
+          <NavigationProperty Name="Groups5" Relationship="Database.FK_Groups_HourShifts5" FromRole="HourShifts" ToRole="Group" />
+          <NavigationProperty Name="Groups6" Relationship="Database.FK_Groups_HourShifts6" FromRole="HourShifts" ToRole="Group" />
+          <NavigationProperty Name="BaseHours" Relationship="Database.FK_HourShifts_BaseHours" FromRole="HourShifts" ToRole="BaseHours" />
+        </EntityType>
+        <Association Name="FK_Groups_HourShifts">
+          <End Type="Database.HourShifts" Role="HourShifts" Multiplicity="0..1" />
+          <End Type="Database.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="Sunday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts1">
+          <End Type="Database.HourShifts" Role="HourShifts" Multiplicity="0..1" />
+          <End Type="Database.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="Monday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts2">
+          <End Type="Database.HourShifts" Role="HourShifts" Multiplicity="0..1" />
+          <End Type="Database.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="Tuesday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts3">
+          <End Type="Database.HourShifts" Role="HourShifts" Multiplicity="0..1" />
+          <End Type="Database.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="Wednesday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts4">
+          <End Type="Database.HourShifts" Role="HourShifts" Multiplicity="0..1" />
+          <End Type="Database.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="Thursday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts5">
+          <End Type="Database.HourShifts" Role="HourShifts" Multiplicity="0..1" />
+          <End Type="Database.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="Friday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Groups_HourShifts6">
+          <End Type="Database.HourShifts" Role="HourShifts" Multiplicity="0..1" />
+          <End Type="Database.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HourShifts">
+              <PropertyRef Name="ShiftId" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="Saturday" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HourShifts_BaseHours">
+          <End Type="Database.BaseHours" Role="BaseHours" Multiplicity="0..1" />
+          <End Type="Database.HourShifts" Role="HourShifts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseHours">
+              <PropertyRef Name="BaseHourId" />
+            </Principal>
+            <Dependent Role="HourShifts">
+              <PropertyRef Name="BaseHourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetUserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Database.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" FromRole="AspNetUserRole" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Type="Database.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Database.AspNetUserRole" Role="AspNetUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseStoreContainer" CdmEntityContainer="dbEntities">
+          <EntitySetMapping Name="Children">
+            <EntityTypeMapping TypeName="IsTypeOf(Database.Child)">
+              <MappingFragment StoreEntitySet="Children">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+                <ScalarProperty Name="Inactive" ColumnName="Inactive" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="EduLevel" ColumnName="EduLevel" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="FreqId" ColumnName="FreqId" />
+                <ScalarProperty Name="ClassNo" ColumnName="ClassNo" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="YearId" ColumnName="YearId" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CourseFrequencies">
+            <EntityTypeMapping TypeName="Database.CourseFrequency">
+              <MappingFragment StoreEntitySet="CourseFrequency">
+                <ScalarProperty Name="FreqId" ColumnName="FreqId" />
+                <ScalarProperty Name="DaysCount" ColumnName="DaysCount" />
+                <ScalarProperty Name="FrequencyDescription" ColumnName="FrequencyDescription" />
+                <ScalarProperty Name="Inactive" ColumnName="Inactive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FreeHours">
+            <EntityTypeMapping TypeName="Database.FreeHour">
+              <MappingFragment StoreEntitySet="FreeHours">
+                <ScalarProperty Name="DayHourId" ColumnName="DayHourId" />
+                <ScalarProperty Name="FreeHourId" ColumnName="FreeHourId" />
+                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="Database.Group">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="Trainer" ColumnName="Trainer" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="EduLevel" ColumnName="EduLevel" />
+                <ScalarProperty Name="YearId" ColumnName="YearId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="FreqId" ColumnName="FreqId" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="PersonCount" ColumnName="PersonCount" />
+                <ScalarProperty Name="Inactive" ColumnName="Inactive" />
+                <ScalarProperty Name="PlaceId" ColumnName="PlaceId" />
+                <ScalarProperty Name="Sunday" ColumnName="Sunday" />
+                <ScalarProperty Name="Monday" ColumnName="Monday" />
+                <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
+                <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
+                <ScalarProperty Name="Thursday" ColumnName="Thursday" />
+                <ScalarProperty Name="Friday" ColumnName="Friday" />
+                <ScalarProperty Name="Saturday" ColumnName="Saturday" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YearGroups">
+            <EntityTypeMapping TypeName="Database.YearGroup">
+              <MappingFragment StoreEntitySet="YearGroups">
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="YearGroupId" ColumnName="YearGroupId" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DayOfWeeks">
+            <EntityTypeMapping TypeName="Database.DayOfWeek">
+              <MappingFragment StoreEntitySet="DayOfWeek">
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="TheDay" ColumnName="DayOfWeek" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="Database.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TermsAccepted" ColumnName="TermsAccepted" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YearGroupDays">
+            <EntityTypeMapping TypeName="Database.YearGroupDay">
+              <MappingFragment StoreEntitySet="YearGroupDays">
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="YearGroupId" ColumnName="YearGroupId" />
+                <ScalarProperty Name="YGDayId" ColumnName="YGDayId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ExportData" FunctionName="Database.Store.ExportData" />
+          <EntitySetMapping Name="qExportData">
+            <EntityTypeMapping TypeName="Database.qExportData">
+              <MappingFragment StoreEntitySet="qExportData">
+                <ScalarProperty Name="Trainer" ColumnName="Trainer" />
+                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+                <ScalarProperty Name="Child_Creation_Date" ColumnName="Child Creation Date" />
+                <ScalarProperty Name="Terms_Accepted" ColumnName="Terms Accepted" />
+                <ScalarProperty Name="Parent_Related_Comment" ColumnName="Parent Related Comment" />
+                <ScalarProperty Name="Child_Related_Comment" ColumnName="Child Related Comment" />
+                <ScalarProperty Name="Inactive" ColumnName="Inactive" />
+                <ScalarProperty Name="Sunday" ColumnName="Sunday" />
+                <ScalarProperty Name="Saturday" ColumnName="Saturday" />
+                <ScalarProperty Name="Friday" ColumnName="Friday" />
+                <ScalarProperty Name="Thursday" ColumnName="Thursday" />
+                <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
+                <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
+                <ScalarProperty Name="Monday" ColumnName="Monday" />
+                <ScalarProperty Name="Edu_Level" ColumnName="Edu Level" />
+                <ScalarProperty Name="ClassNo" ColumnName="ClassNo" />
+                <ScalarProperty Name="School_Name" ColumnName="School Name" />
+                <ScalarProperty Name="Frequency_Description" ColumnName="Frequency Description" />
+                <ScalarProperty Name="Edu_Group_Name" ColumnName="EduGroupName" />
+                <ScalarProperty Name="Year_Group_Name" ColumnName="Year Group Name" />
+                <ScalarProperty Name="Birth_Date" ColumnName="Birth Date" />
+                <ScalarProperty Name="Children_Full_Name" ColumnName="Children Full Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone Number" />
+                <ScalarProperty Name="Parent_Full_Name" ColumnName="Parent Full Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaseHours">
+            <EntityTypeMapping TypeName="Database.BaseHours">
+              <MappingFragment StoreEntitySet="BaseHours">
+                <ScalarProperty Name="HourDesc" ColumnName="HourDesc" />
+                <ScalarProperty Name="BaseHourId" ColumnName="BaseHourId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DayHours">
+            <EntityTypeMapping TypeName="Database.DayHours">
+              <MappingFragment StoreEntitySet="DayHours">
+                <ScalarProperty Name="Inactive" ColumnName="Inactive" />
+                <ScalarProperty Name="BaseHourId" ColumnName="BaseHourId" />
+                <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+                <ScalarProperty Name="DayHourId" ColumnName="DayHourId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="MatchingChildrenByHours" FunctionName="Database.Store.MatchingChildrenByHours">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Database.MatchingChildrenByHours_Result">
+                <ScalarProperty Name="HourDesc" ColumnName="HourDesc" />
+                <ScalarProperty Name="Sunday" ColumnName="Sunday" />
+                <ScalarProperty Name="Monday" ColumnName="Monday" />
+                <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
+                <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
+                <ScalarProperty Name="Thursday" ColumnName="Thursday" />
+                <ScalarProperty Name="Friday" ColumnName="Friday" />
+                <ScalarProperty Name="Saturday" ColumnName="Saturday" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ChildDayHours" FunctionName="Database.Store.ChildDayHours">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Database.ChildDayHours_Result">
+                <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="HourDesc" ColumnName="HourDesc" />
+                <ScalarProperty Name="DayHourId" ColumnName="DayHourId" />
+                <ScalarProperty Name="BaseHourId" ColumnName="BaseHourId" />
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
+                <ScalarProperty Name="Inactive" ColumnName="Inactive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="HourShifts">
+            <EntityTypeMapping TypeName="Database.HourShifts">
+              <MappingFragment StoreEntitySet="HourShifts">
+                <ScalarProperty Name="BaseHourId" ColumnName="BaseHourId" />
+                <ScalarProperty Name="HourShift" ColumnName="HourShift" />
+                <ScalarProperty Name="StartHourShifted" ColumnName="StartHourShifted" />
+                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserRoles">
+            <EntityTypeMapping TypeName="Database.AspNetUserRole">
+              <MappingFragment StoreEntitySet="AspNetUserRoles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

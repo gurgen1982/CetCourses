@@ -103,6 +103,8 @@ namespace CetCources.Database
         public Nullable<int> GroupId { get; set; }
 
         [Display(Name = "EduLevel", ResourceType = typeof(ChildRes))]
+        [Range(1, 8, ErrorMessage = "Must be in range (1 to 7)")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(CommonRes))]
         public int EduLevel { get; set; }
 
         [Display(Name = "Inactive", ResourceType = typeof(ChildRes))]

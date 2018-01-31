@@ -596,6 +596,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\banner.png" />
+    <Content Include="Images\fb.png" />
     <Content Include="Images\left.png" />
     <Content Include="Images\right.png" />
     <Content Include="Images\tick.png" />
@@ -663,7 +664,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="Web.config" />
+    <None Include="Web.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

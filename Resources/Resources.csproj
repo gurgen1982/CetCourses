@@ -136,7 +136,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HomeRes.hy-am.resx" />
     <EmbeddedResource Include="Mails.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Mails.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ManageRes.hy-am.resx" />

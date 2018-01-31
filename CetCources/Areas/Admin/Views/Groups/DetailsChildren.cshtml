@@ -44,9 +44,9 @@
             @Html.DisplayFor(modelItem => item.Inactive)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit",
-                   controllerName: "Children",
-                   routeValues: new { id = item.ChildId, area = "Admin" }, htmlAttributes: null)
+            @Html.ActionLink("Edit", "Do",
+                   controllerName: "Child",
+                   routeValues: new { id = item.ChildId, area = "" }, htmlAttributes: new { @target= "_blank"})
         </td>
     </tr>
 }

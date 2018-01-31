@@ -77,7 +77,7 @@ namespace CetCources.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Do([Bind(Include = "ChildId,UserId,FullName,BirthDateString,YearId,SchoolId,ClassNo,FreqId,GroupId,Inactive,Comment")] Child child)
+        public async Task<ActionResult> Do([Bind(Include = "ChildId,UserId,FullName,BirthDateString,YearId,SchoolId,ClassNo,FreqId,GroupId,EduLevel,Inactive,Comment")] Child child)
         {
             if(!string.IsNullOrEmpty(child.UserId) && User.IsInRole("Admin"))
             {
@@ -94,7 +94,7 @@ namespace CetCources.Controllers
                 {
                     child.ParentId = User.IsInRole("Admin") ? (string.IsNullOrEmpty(child.UserId) ? User.Identity.GetUserId() : child.UserId) : User.Identity.GetUserId();
                     child.CreationDate = DateTime.Now;
-                    child.EduLevel = 1;
+                    child.EduLevel = User.IsInRole("Admin") ? child.EduLevel : 1;
                     child.FreqId = child.FreqId == 0 ? (child.YearId == yearid ? child.FreqId : null) : child.FreqId;
                     child.GroupId = child.GroupId == 0 ? null : child.GroupId;
                     db.Children.Add(child);
@@ -104,7 +104,7 @@ namespace CetCources.Controllers
                     {
                         Session[ParentId] = child.ParentId;
                     }
-                    await Mail.Send("Child added", $"You have just added a child {child.FullName}", child.AspNetUser.Email, child.AspNetUser.FullName);
+                    await Mail.Send(Mails.ChildAdded, string.Format(Mails.ChildAddedBody, child.AspNetUser.FullName, child.FullName), child.AspNetUser.Email, child.AspNetUser.FullName);
                 }
                 else
                 {
@@ -118,6 +118,10 @@ namespace CetCources.Controllers
                     dbChild.ClassNo = child.ClassNo;
                     dbChild.Inactive = child.Inactive;
                     dbChild.Comment = child.Comment;
+                    if (User.IsInRole("Admin"))
+                    {
+                        dbChild.EduLevel = child.EduLevel;
+                    }
                     //child.ParentId = User.Identity.GetUserId();
 
                     db.Entry(dbChild).State = EntityState.Modified;
@@ -139,7 +143,10 @@ namespace CetCources.Controllers
                         child = db.Children.Find(child.ChildId);
                         if (child.Group.PersonCount <= child.Group.Children.Count)
                         {
-                            await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
+                            //await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
+                            await Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
+                                  string.Format(Mails.GroupIsFullBody, child.AspNetUser.FullName, child.Group.GroupName, child.FullName),
+                                  child.AspNetUser.Email, child.AspNetUser.FullName);
                         }
                     }
 
@@ -293,7 +300,10 @@ namespace CetCources.Controllers
             child = db.Children.Find(child.ChildId);
             if (child.Group.PersonCount <= child.Group.Children.Count)
             {
-                await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
+                //await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
+                await Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
+                                  string.Format(Mails.GroupIsFullBody, child.AspNetUser.FullName, child.Group.GroupName, child.FullName),
+                                  child.AspNetUser.Email, child.AspNetUser.FullName);
             }
 
             return RedirectToAction("Index", string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);

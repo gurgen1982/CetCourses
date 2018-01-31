@@ -196,13 +196,26 @@ namespace CetCources.Areas.Admin.Controllers
                         foreach (var chld in childIdList)
                         {
                             var ch = db.Children.Find(chld);
-                            await Mail.Send("Accepted to group",
-                                        $"<b>{ch.FullName}</b> have just been added to group <b>{ch.Group.GroupName}</b>" +
-                                        group.MailMessage,
-                                        ch.AspNetUser.Email, ch.AspNetUser.FullName);
+                            await Mail.Send(Mails.AcceptedToGroup,
+                                string.Format(Mails.AcceptedToGroupBody, ch.AspNetUser.FullName, ch.FullName, ch.Group.GroupName, group.MailMessage), 
+                                ch.AspNetUser.Email, ch.AspNetUser.FullName);
+                         
+                            //////Dear { Parent Name}, { ChildFullName}
+                            //////has just been added to group { GroupName}. { Additional Message typed by admin when creating the group.}
+
+                            //////Հարգելի { Parent Name}, { ChildFullName}
+                            //////ընդգրկվել է { GroupName}
+                            //////խմբում։ { Additional Message typed by admin when creating the group.}
+
+                            //$"<b>{ch.FullName}</b> have just been added to group <b>{ch.Group.GroupName}</b>" +
+                            //group.MailMessage,
+                            //ch.AspNetUser.Email, ch.AspNetUser.FullName);
                             if (isFull)
                             {
-                                await Mail.Send($"Group {ch.Group.GroupName} is full", $"The group <b>{ch.Group.GroupName}</b> to which <b>{ch.FullName}</b> joined is full and is ready to start", ch.AspNetUser.Email, ch.AspNetUser.FullName);
+                                await Mail.Send(
+                                    string.Format(Mails.GroupIsFull, ch.Group.GroupName),//$"Group {ch.Group.GroupName} is full", 
+                                    string.Format(Mails.GroupIsFullBody, ch.AspNetUser.FullName, ch.Group.GroupName, ch.FullName),//$"The group <b>{ch.Group.GroupName}</b> to which <b>{ch.FullName}</b> joined is full and is ready to start", 
+                                    ch.AspNetUser.Email, ch.AspNetUser.FullName);
                             }
                         }
                     }
@@ -226,7 +239,10 @@ namespace CetCources.Areas.Admin.Controllers
                     {
                         foreach (var ch in grp.Children)
                         {
-                            await Mail.Send($"Group {ch.Group.GroupName} is full", $"The group <b>{ch.Group.GroupName}</b> to which <b>{ch.FullName}</b> joined is full and is ready to start", ch.AspNetUser.Email, ch.AspNetUser.FullName);
+                            await Mail.Send(
+                                  string.Format(Mails.GroupIsFull, ch.Group.GroupName),//$"Group {ch.Group.GroupName} is full", 
+                                  string.Format(Mails.GroupIsFullBody, ch.AspNetUser.FullName, ch.Group.GroupName, ch.FullName),//$"The group <b>{ch.Group.GroupName}</b> to which <b>{ch.FullName}</b> joined is full and is ready to start", 
+                                  ch.AspNetUser.Email, ch.AspNetUser.FullName);
                         }
                     }
 

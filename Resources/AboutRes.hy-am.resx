@@ -127,10 +127,10 @@
     <value>Կայքի նկարագրություն</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>Թումանյան 26</value>
+    <value>Թումանյան 26/ա, Երևան, 0001, Հայաստան</value>
   </data>
   <data name="Contact" xml:space="preserve">
-    <value>Կոնտակտ</value>
+    <value>Կոնտակտներ</value>
   </data>
   <data name="ContactPage" xml:space="preserve">
     <value>Մանրամասն</value>
@@ -138,11 +138,11 @@
   <data name="Mail" xml:space="preserve">
     <value>Էլ․ փոստ՝</value>
   </data>
-  <data name="MailAddress" xml:space="preserve">
-    <value>mailto:vkazakhetsyan@cet.am</value>
-  </data>
   <data name="Phone" xml:space="preserve">
     <value>Հեռախոս</value>
+  </data>
+  <data name="TheName" xml:space="preserve">
+    <value>Սի Ի Թի ՍՊԸ (Creative Educational Technologies)</value>
   </data>
   <data name="Yerevan" xml:space="preserve">
     <value>Երևան, Հայաստան 0025</value>

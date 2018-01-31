@@ -3,8 +3,32 @@
     
     ViewBag.Title = AboutRes.Contact;
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h2>@ViewBag.Title</h2>
+
+<address>
+    @AboutRes.TheName<br />
+    <span class="text-info glyphicon glyphicon-map-marker"></span>&emsp;@AboutRes.Address<br />
+    <span class="text-info glyphicon glyphicon-phone-alt"></span>&emsp;+374 10 600888<br />
+    <span class="text-info glyphicon glyphicon-phone"></span>&emsp;+374 95 511553<br />
+    <span class="text-info glyphicon glyphicon-envelope"></span>&emsp;<a href="mailto:@(AboutRes.MailAddress)">@AboutRes.MailAddress</a><br />
+    <a href="http://www.cet.am">www.cet.am</a><br />
+    <a href="https://www.facebook.com/CreativeEducationalTechnologies/" target="_blank">
+        <img src="~/Images/fb.png" width="32" />
+    </a>
+    @*<div class="fb-page" data-href="https://www.facebook.com/CreativeEducationalTechnologies/" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/CreativeEducationalTechnologies/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/CreativeEducationalTechnologies/">Creative Educational Technologies</a></blockquote></div>*@
+</address>
+
+@*<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.11';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>*@
+
+@*<h3>@ViewBag.Message</h3>
 
 <address>
     @AboutRes.Address<br />
@@ -15,4 +39,4 @@
 
 <address>
     <strong>@AboutRes.Mail</strong>   <a href="@AboutRes.MailAddress">@AboutRes.MailAddress</a><br />
-</address>
+</address>*@

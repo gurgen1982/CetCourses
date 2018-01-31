@@ -39,8 +39,8 @@
                         <h4>
                             @ChildRes.ParentInfo: <b> @ViewBag.Parent</b>
                         </h4>
-                        
-                        
+
+
                         <hr />
                     }
                     else
@@ -48,7 +48,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-4">
-                                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", @id="useComplete" } })
+                                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", @id = "useComplete" } })
                             </div>
                             <div class="col-md-6">
                                 @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
@@ -139,6 +139,19 @@
                     </div>
                 </div>
 
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EduLevel, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.EduLevel, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.ValidationMessageFor(model => model.EduLevel, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -171,7 +184,7 @@
     }
         var saveText = '@CommonRes.Save';
         var nextText = '@Html.Raw(CommonRes.Next)';
-        var freqId = @(Model!= null ? Model.FreqId : 0);
+        var freqId = @(Model!= null ? Model.FreqId?.ToString()?? "0" : "0");
         var fromYear = @((Model != null ? (Model.YearGroup != null ? Model.YearGroup.From :0) : 0) == 4 ? "4" : "null");
         var parentAutoCompletePath = '@Url.Action("GetParentList", new { })';
     </script>
@@ -191,7 +204,8 @@
         width: 280px;
         height: 100px;
     }
-    .k-autocomplete{
+
+    .k-autocomplete {
         width: 280px;
     }
 </style>

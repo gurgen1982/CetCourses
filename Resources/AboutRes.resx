@@ -128,10 +128,10 @@
     <value>Application description page.</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>Tumanyan 26</value>
+    <value>Tumanyan 26/a, Yerevan 0001, Armenia</value>
   </data>
   <data name="Contact" xml:space="preserve">
-    <value>Contact</value>
+    <value>Contacts</value>
   </data>
   <data name="ContactPage" xml:space="preserve">
     <value>Contact details.</value>
@@ -140,10 +140,13 @@
     <value>Mail:</value>
   </data>
   <data name="MailAddress" xml:space="preserve">
-    <value>mailto:vkazakhetsyan@cet.am</value>
+    <value>vkazakhetsyan@cet.am</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>Phone</value>
+  </data>
+  <data name="TheName" xml:space="preserve">
+    <value>CET (Creative Educational Technologies) LLC</value>
   </data>
   <data name="Yerevan" xml:space="preserve">
     <value>Yerevan, Armenia 0025</value>

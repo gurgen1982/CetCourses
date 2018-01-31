@@ -22,7 +22,7 @@ namespace Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Mails {
+    public class Mails {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.Mails", typeof(Mails).Assembly);
@@ -51,7 +51,7 @@ namespace Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,36 +63,142 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Accepted to group.
         /// </summary>
-        internal static string AcceptedToGroup {
+        public static string AcceptedToGroup {
             get {
                 return ResourceManager.GetString("AcceptedToGroup", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} have just been added to group {1}. &lt;br /&gt; {2}.
+        ///   Looks up a localized string similar to &lt;b&gt;Dear {0}&lt;/b&gt;, &lt;b&gt;{1}&lt;/b&gt; has just been added to group &lt;b&gt;{2}&lt;/b&gt;.
+        ///&lt;br /&gt;
+        ///&lt;b&gt;Հարգելի {0}, {1} ընդգրկվել է {2} խմբում։&lt;/b&gt;
+        ///&lt;br /&gt;
+        ///{3}.
         /// </summary>
-        internal static string AcceptedToGroupBody {
+        public static string AcceptedToGroupBody {
             get {
                 return ResourceManager.GetString("AcceptedToGroupBody", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Created.
+        /// </summary>
+        public static string AccountCreated {
+            get {
+                return ResourceManager.GetString("AccountCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An account was just created using your mail
+        ///&lt;br /&gt;
+        ///&lt;b&gt;Ձեր էլ․ հասցեի օգտագործմամբ, իրականացվել է օգտատիրոջ գրանցում։&lt;/b&gt;.
+        /// </summary>
+        public static string AccountCreatedBody {
+            get {
+                return ResourceManager.GetString("AccountCreatedBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Child added.
+        /// </summary>
+        public static string ChildAdded {
+            get {
+                return ResourceManager.GetString("ChildAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt;Dear {0}&lt;/b&gt;, You have just added a child &lt;b&gt;{1}&lt;/b&gt;.
+        ///&lt;br /&gt;
+        ///&lt;b&gt;Հարգելի {0}&lt;/b&gt;, դուք գրանցեցիք &lt;b&gt;{1}&lt;/b&gt;:.
+        /// </summary>
+        public static string ChildAddedBody {
+            get {
+                return ResourceManager.GetString("ChildAddedBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm your account.
+        /// </summary>
+        public static string ConfirmAccount {
+            get {
+                return ResourceManager.GetString("ConfirmAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please confirm your account by clicking &lt;a href=&apos;{0}&apos;&gt;here&lt;/a&gt;
+        ///&lt;br /&gt;
+        ///&lt;b&gt;Խնդրում ենք հաստատել ձեր գրանցումը սեղմելով &lt;a href=&apos;{0}&apos;&gt;այստեղ&lt;/a&gt;:&lt;/b&gt;.
+        /// </summary>
+        public static string ConfirmAccountBody {
+            get {
+                return ResourceManager.GetString("ConfirmAccountBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group {0} is full.
         /// </summary>
-        internal static string GroupIsFull {
+        public static string GroupIsFull {
             get {
                 return ResourceManager.GetString("GroupIsFull", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The group {0} to which {1} is joined is full and is ready to start.
+        ///   Looks up a localized string similar to &lt;b&gt;Dear {1}&lt;/b&gt;, the group &lt;b&gt;{0}&lt;/b&gt; to which &lt;b&gt;{2}&lt;/b&gt; is joined is full and is ready to start
+        ///&lt;br /&gt;
+        ///&lt;b&gt;Հարգելի {1}, խումբ {2} ձևավորված է և պատրաստ է մեկնարկման։&lt;/b&gt;.
         /// </summary>
-        internal static string GroupIsFullBody {
+        public static string GroupIsFullBody {
             get {
                 return ResourceManager.GetString("GroupIsFullBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password changed.
+        /// </summary>
+        public static string PasswordChanged {
+            get {
+                return ResourceManager.GetString("PasswordChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt;Dear {0}&lt;/b&gt;, your password has been changed.
+        ///&lt;br /&gt;
+        ///&lt;b&gt;Հարգելի {0}&lt;/b&gt;, Ձեր գաղտնաբառը փոխված է։.
+        /// </summary>
+        public static string PasswordChangedBody {
+            get {
+                return ResourceManager.GetString("PasswordChangedBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset Password.
+        /// </summary>
+        public static string ResetPassword {
+            get {
+                return ResourceManager.GetString("ResetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please reset your password by clicking &lt;a href=&apos;{0}&apos;&gt;here&lt;/a&gt;
+        ///&lt;br /&gt;
+        ///&lt;b&gt;Գաղտնաբառը փոխելու համար սեղմեք &lt;a href=&apos;{0}&apos;&gt;այստեղ&lt;/a&gt;:&lt;/b&gt;.
+        /// </summary>
+        public static string ResetPasswordBody {
+            get {
+                return ResourceManager.GetString("ResetPasswordBody", resourceCulture);
             }
         }
     }

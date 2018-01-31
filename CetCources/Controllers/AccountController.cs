@@ -193,13 +193,16 @@ namespace CetCources.Controllers
                         // Send an email with this link
                         var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         //     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                        await Mail.Send("Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>", user.Email, user.FullName, true);
+                        await Mail.Send(
+                            Mails.ConfirmAccount,//"Confirm your account", 
+                            string.Format(Mails.ConfirmAccountBody, callbackUrl),//"Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>", 
+                            user.Email, user.FullName, true);
 
                         return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        await Mail.Send("Account Created", "An account was just created using your mail", user.Email, user.FullName, true);
+                        await Mail.Send(Mails.AccountCreated, Mails.AccountCreatedBody, user.Email, user.FullName, true);
                         await UserManager.ConfirmEmailAsync(user.Id, code);
                         return RedirectToAction("Index", "Child", new { userId = user.Id });
                     }
@@ -252,8 +255,8 @@ namespace CetCources.Controllers
                 // Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                await Mail.Send("Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>", user.Email, user.FullName);
+                //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                await Mail.Send(Mails.ResetPassword, string.Format(Mails.ResetPasswordBody, callbackUrl), user.Email, user.FullName);
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 

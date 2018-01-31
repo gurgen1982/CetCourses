@@ -1,4 +1,5 @@
 ﻿using CetCources.Database;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -144,11 +145,20 @@ namespace CetCources.Areas.Admin.Controllers
             db.SaveChanges();
 
             child = db.Children.Find(child.ChildId);
-            await Mail.Send("Accepted to group", $"<b>{child.FullName}</b> have just been added to group <b>{child.Group.GroupName}</b>", child.AspNetUser.Email, child.AspNetUser.FullName);
+            //await Mail.Send("Accepted to group", $"<b>{child.FullName}</b> have just been added to group <b>{child.Group.GroupName}</b>", child.AspNetUser.Email, child.AspNetUser.FullName);
+
+            await Mail.Send(Mails.AcceptedToGroup,
+                           string.Format(Mails.AcceptedToGroupBody, child.AspNetUser.FullName, child.FullName, child.Group.GroupName, string.Empty),
+                           child.AspNetUser.Email, child.AspNetUser.FullName);
+
 
             if (child.Group.PersonCount <= child.Group.Children.Count)
             {
-                await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
+                //await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
+
+                await Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
+                                  string.Format(Mails.GroupIsFullBody, child.AspNetUser.FullName, child.Group.GroupName, child.FullName),
+                                  child.AspNetUser.Email, child.AspNetUser.FullName);
             }
 
             return Json(child.ChildId, JsonRequestBehavior.AllowGet);

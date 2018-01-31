@@ -88,7 +88,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tumanyan 26.
+        ///   Looks up a localized string similar to Tumanyan 26/a, Yerevan 0001, Armenia.
         /// </summary>
         public static string Address {
             get {
@@ -97,7 +97,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contact.
+        ///   Looks up a localized string similar to Contacts.
         /// </summary>
         public static string Contact {
             get {
@@ -124,7 +124,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mailto:vkazakhetsyan@cet.am.
+        ///   Looks up a localized string similar to vkazakhetsyan@cet.am.
         /// </summary>
         public static string MailAddress {
             get {
@@ -138,6 +138,15 @@ namespace Resources {
         public static string Phone {
             get {
                 return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CET (Creative Educational Technologies) LLC.
+        /// </summary>
+        public static string TheName {
+            get {
+                return ResourceManager.GetString("TheName", resourceCulture);
             }
         }
         

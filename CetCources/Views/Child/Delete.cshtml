@@ -5,6 +5,7 @@
 @{
     ViewBag.Title = CommonRes.Delete;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var parentId = Session[CetCources.Controllers.ChildController.ParentId] as string;
 }
 
 <h2 class="text-center">@CommonRes.Delete</h2>
@@ -83,7 +84,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="@CommonRes.Delete" class="btn btn-default" /> |
-            @Html.ActionLink(CommonRes.BackToList, "Index")
+            @Html.ActionLink(CommonRes.BackToList, "Index", string.IsNullOrEmpty(parentId) ? null : new { userid = parentId })
         </div>
     }
 </div>

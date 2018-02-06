@@ -192,11 +192,14 @@
   <data name="SchoolName" xml:space="preserve">
     <value>School Name</value>
   </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select All Hours</value>
+  </data>
   <data name="SelectGroup" xml:space="preserve">
     <value>Select Group</value>
   </data>
   <data name="SelectGroupFor" xml:space="preserve">
-    <value>select a group</value>
+    <value>select a group ({0} session)</value>
   </data>
   <data name="SelectSuggestedGroup" xml:space="preserve">
     <value>The following groups were found in accordance with your selection</value>

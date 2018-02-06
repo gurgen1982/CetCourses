@@ -192,11 +192,14 @@
   <data name="SchoolName" xml:space="preserve">
     <value>Դպրոց</value>
   </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Ընտրել բոլոր ժամերը</value>
+  </data>
   <data name="SelectGroup" xml:space="preserve">
     <value>Ընտրեք խումբ</value>
   </data>
   <data name="SelectGroupFor" xml:space="preserve">
-    <value>ընտրեք Ձեզ հարմար խումբ</value>
+    <value>ընտրեք Ձեզ հարմար խումբ  ({0} փուլ)</value>
   </data>
   <data name="SelectSuggestedGroup" xml:space="preserve">
     <value>Ձեր ընտրությանը համապատասխան գտնվել են հետևյալ խմբերը։</value>

@@ -65,9 +65,18 @@
             </td>
 
             <td>
-                @Html.ActionLink(CommonRes.Edit, "Do", new { id = item.ChildId }) |
-                @Html.ActionLink(CommonRes.Details, "Details", new { id = item.ChildId }) |
-                @Html.ActionLink(CommonRes.Delete, "Delete", new { id = item.ChildId })
+                @if (!string.IsNullOrEmpty(ViewBag.UserId))
+                {
+                    @(Html.ActionLink(CommonRes.Edit, "Do", new { id = item.ChildId, UserId= ViewBag.UserId })) @:|
+                    @(Html.ActionLink(CommonRes.Details, "Details", new { id = item.ChildId, UserId = ViewBag.UserId })) @:|
+                    @(Html.ActionLink(CommonRes.Delete, "Delete", new { id = item.ChildId, UserId = ViewBag.UserId }))
+                }
+                else
+                {
+                    @(Html.ActionLink(CommonRes.Edit, "Do", new { id = item.ChildId })) @:|
+                    @(Html.ActionLink(CommonRes.Details, "Details", new { id = item.ChildId })) @:|
+                    @(Html.ActionLink(CommonRes.Delete, "Delete", new { id = item.ChildId }))
+                }
             </td>
         </tr>
     }

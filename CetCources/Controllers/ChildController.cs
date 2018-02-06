@@ -29,7 +29,7 @@ namespace CetCources.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole("Admin") && !string.IsNullOrEmpty(userid))
             {
                 ViewBag.UserId = userid;
                 userId = userid;
@@ -40,7 +40,7 @@ namespace CetCources.Controllers
         }
 
         // GET: Child/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string UserId)
         {
             if (id == null)
             {
@@ -52,6 +52,7 @@ namespace CetCources.Controllers
                 return HttpNotFound();
             }
             ViewBag.FreeHours = db.ChildDayHours(id);
+            Session[ParentId] = UserId;
             return View(child);
         }
 
@@ -79,7 +80,8 @@ namespace CetCources.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Do([Bind(Include = "ChildId,UserId,FullName,BirthDateString,YearId,SchoolId,ClassNo,FreqId,GroupId,EduLevel,Inactive,Comment")] Child child)
         {
-            if(!string.IsNullOrEmpty(child.UserId) && User.IsInRole("Admin"))
+            var bGroupChanged = false;
+            if (!string.IsNullOrEmpty(child.UserId) && User.IsInRole("Admin"))
             {
                 var d = db.AspNetUsers.Find(child.UserId);
                 if (d == null)
@@ -96,6 +98,9 @@ namespace CetCources.Controllers
                     child.CreationDate = DateTime.Now;
                     child.EduLevel = User.IsInRole("Admin") ? child.EduLevel : 1;
                     child.FreqId = child.FreqId == 0 ? (child.YearId == yearid ? child.FreqId : null) : child.FreqId;
+
+                    bGroupChanged = child.GroupId != 0;
+
                     child.GroupId = child.GroupId == 0 ? null : child.GroupId;
                     db.Children.Add(child);
                     db.SaveChanges();
@@ -113,6 +118,9 @@ namespace CetCources.Controllers
                     dbChild.BirthDate = child.BirthDate;
                     dbChild.YearId = child.YearId;
                     dbChild.FreqId = child.FreqId == 0 ? (child.YearId == yearid ? child.FreqId : null) : child.FreqId;
+
+                    bGroupChanged = dbChild.GroupId != child.GroupId;
+
                     dbChild.GroupId = child.GroupId == 0 ? null : child.GroupId;
                     dbChild.SchoolId = child.SchoolId;
                     dbChild.ClassNo = child.ClassNo;
@@ -138,7 +146,7 @@ namespace CetCources.Controllers
 
                 if (child.Inactive || (child.GroupId != null && child.GroupId > 0))
                 {
-                    if (child.GroupId > 0)
+                    if (child.GroupId > 0 && bGroupChanged)
                     {
                         child = db.Children.Find(child.ChildId);
                         if (child.Group.PersonCount <= child.Group.Children.Count)
@@ -529,9 +537,19 @@ namespace CetCources.Controllers
             // get childId from session
             var childId = Convert.ToInt32(Session[ChildId]);
 
+            var id = Convert.ToInt32(form["id"]);
             // if form state is invalid, return back to form
             if (!ModelState.IsValid)
             {
+                if (id == 0)
+                {
+                    ViewBag.NoGroup = true;
+                    ViewBag.ChildId = Session[ChildId];
+                }
+                else
+                {
+                    ViewBag.NoGroup = false;
+                }
                 return View();
             }
 
@@ -655,7 +673,15 @@ namespace CetCources.Controllers
             }
 
             var days = db.ChildDayHours(childId);
-
+            if (id == 0)
+            {
+                ViewBag.NoGroup = true;
+                ViewBag.ChildId = Session[ChildId];
+            }
+            else
+            {
+                ViewBag.NoGroup = false;
+            }
             return View(days);
         }
 
@@ -684,7 +710,7 @@ namespace CetCources.Controllers
             }
         }
 
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, string UserId)
         {
             if (id == null)
             {
@@ -695,18 +721,19 @@ namespace CetCources.Controllers
             {
                 return HttpNotFound();
             }
+            Session[ParentId] = UserId;
             return View(child);
         }
 
         // POST: Child/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, string UserId)
         {
             Child child = db.Children.Find(id);
             db.Children.Remove(child);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { userid = UserId });
         }
 
         //public ActionResult DayHours(int day)

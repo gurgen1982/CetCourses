@@ -286,6 +286,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select All Hours.
+        /// </summary>
+        public static string SelectAll {
+            get {
+                return ResourceManager.GetString("SelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Group.
         /// </summary>
         public static string SelectGroup {
@@ -295,7 +304,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select a group.
+        ///   Looks up a localized string similar to select a group ({0} session).
         /// </summary>
         public static string SelectGroupFor {
             get {

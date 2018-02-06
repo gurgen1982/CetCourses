@@ -5,13 +5,15 @@
     ViewBag.Title = ChildRes.SelectGroup;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var parentId = Session[CetCources.Controllers.ChildController.ParentId] as string;
+    var isEnglish = System.Threading.Thread.CurrentThread.CurrentUICulture.LCID == 1033;
+    var suffix = Model.EduLevel == 1 ? (isEnglish ? "st" : "-ին") : (isEnglish ? "th" : "-րդ");
 }
 
 <h2 class="text-center">@CommonRes.Select</h2>
 
 <div class="row">
     <div class="col-md-12 text-center">
-        <h4><strong><i>@Html.DisplayFor(model => model.FullName)</i></strong> @ChildRes.SelectGroupFor</h4>
+        <h4><strong><i>@Html.DisplayFor(model => model.FullName)</i></strong> @string.Format(ChildRes.SelectGroupFor, Model.EduLevel + suffix)</h4>
         <div id="listGroup"></div>
     </div>
 </div>
@@ -33,7 +35,7 @@
 </h4>
 <div>
     @Html.ActionLink(CommonRes.PreviousStep, "Do",
-    !string.IsNullOrEmpty(parentId) ? new { id = Model.ChildId, userid = parentId }: new { id = Model.ChildId, userid = "" } ) |
+    !string.IsNullOrEmpty(parentId) ? new { id = Model.ChildId, userid = parentId } : new { id = Model.ChildId, userid = "" }) |
 
     @Html.ActionLink(CommonRes.BackToList, "Index", string.IsNullOrEmpty(parentId) ? null : new { userid = parentId })
 </div>

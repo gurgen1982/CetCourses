@@ -152,9 +152,9 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;b&gt;Dear {1}&lt;/b&gt;, the group &lt;b&gt;{0}&lt;/b&gt; to which &lt;b&gt;{2}&lt;/b&gt; is joined is full and is ready to start
+        ///   Looks up a localized string similar to &lt;b&gt;Dear {0}&lt;/b&gt;, the group &lt;b&gt;{1}&lt;/b&gt; to which &lt;b&gt;{2}&lt;/b&gt; is joined is full and is ready to start
         ///&lt;br /&gt;
-        ///&lt;b&gt;Հարգելի {1}, խումբ {2} ձևավորված է և պատրաստ է մեկնարկման։&lt;/b&gt;.
+        ///&lt;b&gt;Հարգելի {0}, խումբ {1} ձևավորված է և պատրաստ է մեկնարկման։&lt;/b&gt;.
         /// </summary>
         public static string GroupIsFullBody {
             get {

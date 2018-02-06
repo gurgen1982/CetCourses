@@ -7,6 +7,7 @@
 @{
     ViewBag.Title = CommonRes.Details;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var parentId = Session[CetCources.Controllers.ChildController.ParentId] as string;
 }
 
 <h2 class="text-center">@CommonRes.Details</h2>
@@ -129,8 +130,16 @@
     </div>
 </div>
 <p>
-    @Html.ActionLink(CommonRes.Edit, "Do", new { id = Model.ChildId }) |
-    @Html.ActionLink(CommonRes.BackToList, "Index")
+    @if (!string.IsNullOrEmpty(parentId))
+    {
+        @(Html.ActionLink(CommonRes.Edit, "Do", new { id = Model.ChildId, UserId = parentId }))
+    }
+    else
+    {
+        @Html.ActionLink(CommonRes.Edit, "Do", new { id = Model.ChildId })
+    }
+  |
+    @Html.ActionLink(CommonRes.BackToList, "Index", string.IsNullOrEmpty(parentId) ? null : new { userid = parentId })
 </p>
 
 

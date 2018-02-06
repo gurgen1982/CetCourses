@@ -15,9 +15,15 @@
 <h4>@ChildRes.TimePageMessage</h4>
 <hr />
 
+@Html.CheckBox("SelectAll")
+@Html.Label("SelectAll", ChildRes.SelectAll)
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
+        <input type="hidden" id="id" value="@(ViewBag.NoGroup == true ? 0 : 1)" />
+
     <div class="table-responsive">
         <table class="table">
             @{
@@ -108,6 +114,19 @@
                 $("td:has(input[type=checkbox]:not(:checked))").css("background-color", "");
                 $("td:has(input[type=checkbox]:checked)").css("background-color", "blue");
             });
+
+            $("#SelectAll").click(function (e) {
+                var checked = $(this).is(":checked");
+                //if (checked == true)
+                //$("td:not(.disabled) > input[type=checkbox]").val(checked);//.attr("checked", checked);
+                $.each($("td:not(.disabled) > input[type=checkbox]"), function (i, d) {
+                    $(this)[0].checked = checked;
+                });
+                //else
+                //    $("td:not(.disabled) > input[type=checkbox]").removeAttr("checked");
+                $("td:has(input[type=checkbox]:not(:checked))").css("background-color", "");
+                $("td:has(input[type=checkbox]:checked)").css("background-color", "blue");
+            });
         });
     </script>
 }
@@ -143,4 +162,5 @@
             background-color: red;
             color: gray;
         }
+
 </style>

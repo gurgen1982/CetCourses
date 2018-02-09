@@ -123,6 +123,9 @@
   <data name="HomePage" xml:space="preserve">
     <value>Home Page</value>
   </data>
+  <data name="Terms" xml:space="preserve">
+    <value>Terms and Conditions</value>
+  </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome to CET Registration home page</value>
   </data>

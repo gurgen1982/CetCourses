@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Terms and Conditions.
+        /// </summary>
+        public static string Terms {
+            get {
+                return ResourceManager.GetString("Terms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome to CET Registration home page.
         /// </summary>
         public static string Welcome {

@@ -31,5 +31,12 @@ namespace CetCources.Controllers
 
             return View();
         }
+
+        public ActionResult Terms()
+        {
+            ViewBag.Message = AboutRes.ContactPage;
+
+            return View();
+        }
     }
 }

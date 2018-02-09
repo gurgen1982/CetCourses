@@ -72,6 +72,7 @@ namespace CetCources.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Do([Bind(Include = "GroupId,YearId,FreqId,GroupName,PersonCount,Inactive,PlaceId,EduLevel,Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,MailMessage,Trainer")] Group group)
         {
+            var bCountChanged = false;
             if (ModelState.IsValid)
             {
                 var bAdded = false;
@@ -84,6 +85,8 @@ namespace CetCources.Areas.Admin.Controllers
                 else
                 {
                     var dbGroup = db.Groups.Find(group.GroupId);
+
+                    bCountChanged = group.PersonCount != dbGroup.PersonCount;
 
                     dbGroup.YearId = group.YearId;
                     dbGroup.FreqId = group.FreqId;
@@ -197,9 +200,9 @@ namespace CetCources.Areas.Admin.Controllers
                         {
                             var ch = db.Children.Find(chld);
                             await Mail.Send(Mails.AcceptedToGroup,
-                                string.Format(Mails.AcceptedToGroupBody, ch.AspNetUser.FullName, ch.FullName, ch.Group.GroupName, group.MailMessage), 
+                                string.Format(Mails.AcceptedToGroupBody, ch.AspNetUser.FullName, ch.FullName, ch.Group.GroupName, group.MailMessage),
                                 ch.AspNetUser.Email, ch.AspNetUser.FullName);
-                         
+
                             //////Dear { Parent Name}, { ChildFullName}
                             //////has just been added to group { GroupName}. { Additional Message typed by admin when creating the group.}
 
@@ -233,16 +236,18 @@ namespace CetCources.Areas.Admin.Controllers
                         }
                         db.SaveChanges();
                     }
-
-                    var grp = db.Groups.Find(group.GroupId);
-                    if (grp.PersonCount <= grp.Children.Count)
+                    if (bCountChanged)
                     {
-                        foreach (var ch in grp.Children)
+                        var grp = db.Groups.Find(group.GroupId);
+                        if (grp.PersonCount <= grp.Children.Count)
                         {
-                            await Mail.Send(
-                                  string.Format(Mails.GroupIsFull, ch.Group.GroupName),//$"Group {ch.Group.GroupName} is full", 
-                                  string.Format(Mails.GroupIsFullBody, ch.AspNetUser.FullName, ch.Group.GroupName, ch.FullName),//$"The group <b>{ch.Group.GroupName}</b> to which <b>{ch.FullName}</b> joined is full and is ready to start", 
-                                  ch.AspNetUser.Email, ch.AspNetUser.FullName);
+                            foreach (var ch in grp.Children)
+                            {
+                                await Mail.Send(
+                                      string.Format(Mails.GroupIsFull, ch.Group.GroupName),//$"Group {ch.Group.GroupName} is full", 
+                                      string.Format(Mails.GroupIsFullBody, ch.AspNetUser.FullName, ch.Group.GroupName, ch.FullName),//$"The group <b>{ch.Group.GroupName}</b> to which <b>{ch.FullName}</b> joined is full and is ready to start", 
+                                      ch.AspNetUser.Email, ch.AspNetUser.FullName);
+                            }
                         }
                     }
 

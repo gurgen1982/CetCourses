@@ -65,7 +65,7 @@
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.CheckBoxFor(m => m.TermsAccepted)
-                <a href="#">@Resources.AccountRes.Terms</a>
+                <a href="@Url.Action("Terms", controllerName:"Home")" target="_blank">@AccountRes.Terms</a>
             </div>
             
         </div>

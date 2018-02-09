@@ -1,0 +1,12 @@
+﻿@using Resources
+@{
+    ViewBag.Title = HomeRes.Terms;
+}
+<h2>@ViewBag.Title.</h2>
+@{ 
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+    var langIsEng = culture.Name.ToLower().Contains("en-us");
+}
+<div style="text-align: justify;line-height: 1.5;font-size:large">
+    @Html.Partial(langIsEng ? "_termsEng" : "_termsHy")
+</div>

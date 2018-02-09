@@ -123,6 +123,9 @@
   <data name="HomePage" xml:space="preserve">
     <value>Գլխավոր</value>
   </data>
+  <data name="Terms" xml:space="preserve">
+    <value>Պայմանները</value>
+  </data>
   <data name="Welcome" xml:space="preserve">
     <value>Բարի գալուստ CET գրանցման համակարգի գլխավոր էջ</value>
   </data>

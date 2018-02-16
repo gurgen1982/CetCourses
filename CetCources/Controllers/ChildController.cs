@@ -34,8 +34,8 @@ namespace CetCources.Controllers
                 ViewBag.UserId = userid;
                 userId = userid;
             }
-            
-            var children = db.Children.Where(p => p.ParentId == userId).Include(c => c.CourseFrequency).Include(c => c.Group)./*Include(c => c.School).*/Include(c => c.YearGroup).OrderBy(x=>x.Inactive).ThenByDescending(x => x.ChildId);
+
+            var children = db.Children.Where(p => p.ParentId == userId).Include(c => c.CourseFrequency).Include(c => c.Group)./*Include(c => c.School).*/Include(c => c.YearGroup).OrderBy(x => x.Inactive).ThenByDescending(x => x.ChildId);
             return View(children.ToList());
         }
 
@@ -149,12 +149,25 @@ namespace CetCources.Controllers
                     if (child.GroupId > 0 && bGroupChanged)
                     {
                         child = db.Children.Find(child.ChildId);
+
+                        await Mail.Send(Mails.AcceptedToGroup,
+                             string.Format(Mails.AcceptedToGroupBody, child.AspNetUser.FullName, child.FullName, child.Group.GroupName, ""),
+                             child.AspNetUser.Email, child.AspNetUser.FullName);
+
                         if (child.Group.PersonCount <= child.Group.Children.Count)
                         {
-                            //await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
-                            await Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
-                                  string.Format(Mails.GroupIsFullBody, child.AspNetUser.FullName, child.Group.GroupName, child.FullName),
-                                  child.AspNetUser.Email, child.AspNetUser.FullName);
+                            Task t = new Task(async () =>
+                            {
+                                // send mails to all children in the group!
+                                foreach (var c in child.Group.Children)
+                                {
+                                    //await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
+                                    await Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
+                                            string.Format(Mails.GroupIsFullBody, c.AspNetUser.FullName, c.Group.GroupName, c.FullName),
+                                            c.AspNetUser.Email, c.AspNetUser.FullName);
+                                }
+                            });
+                            t.Start();
                         }
                     }
 
@@ -177,7 +190,7 @@ namespace CetCources.Controllers
             return View(child);
         }
 
-        public ActionResult GetGroupList(int? YearId, int? FreqId, int? ChildId)
+        public ActionResult GetGroupList(int? YearId, int? FreqId, int? ChildId, int? eduLevel)
         {
             var childGroupId = 0;
             var list = db.Groups.Where(x => !x.Inactive);
@@ -196,9 +209,13 @@ namespace CetCources.Controllers
                 var child = db.Children.Find(ChildId);
                 if (child != null)
                 {
-                    list = list.Where(x => x.EduLevel == child.EduLevel);
+                    list = list.Where(x => x.EduLevel == (eduLevel != null && eduLevel > 0 ? eduLevel : child.EduLevel));
                     childGroupId = child.GroupId ?? 0;
                 }
+            }
+            else if (eduLevel != null && eduLevel > 0)
+            {
+                list = list.Where(x => x.EduLevel == eduLevel);
             }
             var listed = list.ToList();
             if (childGroupId > 0 && !list.Any(x => x.GroupId == childGroupId))
@@ -329,7 +346,7 @@ namespace CetCources.Controllers
             {
                 return Json(null, JsonRequestBehavior.AllowGet);
             }
-            var child1 = db.Children.Find(childId);
+            //var child1 = db.Children.Find(childId);
             var child = db.Children.Find(childId);
 
             //var groups = db.Groups.Where(x=>x.YearId == child.YearId && !x.Inactive)//.Join(db.Children, cc=>cc.GroupId, gg=>gg.GroupId, (c1, g1)=> new {c1. })
@@ -337,7 +354,8 @@ namespace CetCources.Controllers
 
             var groups = db.Groups.Where(x => x.YearId == child.YearId
                                         //&& x.FreqId == child.FreqId 
-                                        && !x.Inactive && x.EduLevel == child.EduLevel)
+                                        && !x.Inactive && x.EduLevel == child.EduLevel
+                                        && x.Children.Count < x.PersonCount)
               .Include(g => g.CourseFrequency)
               .Include(g => g.HourShifts_Sun)
               .Include(g => g.HourShifts_Mon)
@@ -380,7 +398,8 @@ namespace CetCources.Controllers
 
             var groups = db.Groups.Where(x => x.YearId == child.YearId
                                         //&& x.FreqId == child.FreqId 
-                                        && !x.Inactive && x.EduLevel == child.EduLevel)
+                                        && !x.Inactive && x.EduLevel == child.EduLevel
+                                        /*&& x.Children.Count < x.PersonCount*/)
                 .Include(g => g.CourseFrequency)
                 .Include(g => g.HourShifts_Sun)
                 .Include(g => g.HourShifts_Mon)
@@ -701,12 +720,12 @@ namespace CetCources.Controllers
             var filter = Convert.ToString(Request.QueryString[0]);
             if (string.IsNullOrEmpty(filter))
             {
-                return Json(db.AspNetUsers.OrderBy(p => p.Email).Select(p => new { Name = p.Email+" - "+ p.FullName, Id = p.Id }), JsonRequestBehavior.AllowGet);
+                return Json(db.AspNetUsers.OrderBy(p => p.Email).Select(p => new { Name = p.Email + " - " + p.FullName, Id = p.Id }), JsonRequestBehavior.AllowGet);
             }
             else
             {
                 filter = filter.ToLower();
-                return Json(db.AspNetUsers.Where(x=>x.Email.ToLower().Contains(filter) || x.FullName.ToLower().Contains(filter)).OrderBy(p => p.Email).Select(p => new { Name = p.Email + " - " + p.FullName, Id = p.Id }), JsonRequestBehavior.AllowGet);
+                return Json(db.AspNetUsers.Where(x => x.Email.ToLower().Contains(filter) || x.FullName.ToLower().Contains(filter)).OrderBy(p => p.Email).Select(p => new { Name = p.Email + " - " + p.FullName, Id = p.Id }), JsonRequestBehavior.AllowGet);
             }
         }
 

@@ -150,6 +150,9 @@ $(function () {
                         values["YearId"] = $("#YearId").val();
                         values["FreqId"] = $("#FreqId").val();
                         values["ChildId"] = $("#ChildId").val();
+                        if ($("#EduLevel").length > 0) {
+                            values["eduLevel"] = $("#EduLevel").val();
+                        }
                         return values;
                     }
                 }
@@ -217,4 +220,8 @@ $(function () {
         }
         //separator: ", "
     });
+
+    if ($("#EduLevel").length > 0) {
+        $("#EduLevel").on('change', refreshGroupList);
+    }
 });

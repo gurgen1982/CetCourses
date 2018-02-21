@@ -35,11 +35,11 @@ namespace CetCources.Database
         public virtual DbSet<DayOfWeek> DayOfWeeks { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<YearGroupDay> YearGroupDays { get; set; }
-        public virtual DbSet<qExportData> qExportData { get; set; }
         public virtual DbSet<BaseHours> BaseHours { get; set; }
         public virtual DbSet<DayHours> DayHours { get; set; }
         public virtual DbSet<HourShifts> HourShifts { get; set; }
         public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
+        public virtual DbSet<qExportData> qExportDatas { get; set; }
     
         public virtual int ExportData()
         {

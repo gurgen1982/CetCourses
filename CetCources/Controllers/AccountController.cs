@@ -171,21 +171,25 @@ namespace CetCources.Controllers
                     {
                         var roleStore = new RoleStore<IdentityRole>(context);
                         var roleManager = new RoleManager<IdentityRole>(roleStore);
-                        var role = await roleManager.FindByNameAsync("User");
-                        if (role == null)
+                        if (roleManager != null)
                         {
-                            roleManager.Create(new IdentityRole { Name = "User", Id = "2" });
+                            var role = await roleManager.FindByNameAsync("User");
+                            if (role == null)
+                            {
+                                roleManager.Create(new IdentityRole { Name = "User", Id = "2" });
+                            }
                         }
-
                         var userStore = new UserStore<ApplicationUser>(context);
                         var userManager = new UserManager<ApplicationUser>(userStore);
-
-                        userManager.AddToRole(user.Id, "User");
+                        if (userManager != null)
+                        {
+                            userManager.AddToRole(user.Id, "User");
+                        }
                     }
 
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
-                    if (!User.IsInRole("Admin"))
+                    if (User!= null && !User.IsInRole("Admin"))
                     {
 
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -193,16 +197,18 @@ namespace CetCources.Controllers
                         // Send an email with this link
                         var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         //     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                        await Mail.Send(
+                        Mail.AdminInfo = user.PhoneNumber;
+                        Mail.Send(
                             Mails.ConfirmAccount,//"Confirm your account", 
                             string.Format(Mails.ConfirmAccountBody, callbackUrl),//"Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>", 
                             user.Email, user.FullName, true);
-
-                        return RedirectToAction("Index", "Home");
+                        TempData.Add("UserCreated", 1);
+                        return RedirectToAction("Index", "Child");
                     }
                     else
                     {
-                        await Mail.Send(Mails.AccountCreated, Mails.AccountCreatedBody, user.Email, user.FullName, true);
+                        Mail.AdminInfo = user.PhoneNumber;
+                        Mail.Send(Mails.AccountCreated, Mails.AccountCreatedBody, user.Email, user.FullName, true);
                         await UserManager.ConfirmEmailAsync(user.Id, code);
                         return RedirectToAction("Index", "Child", new { userId = user.Id });
                     }
@@ -213,7 +219,7 @@ namespace CetCources.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -256,7 +262,8 @@ namespace CetCources.Controllers
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                await Mail.Send(Mails.ResetPassword, string.Format(Mails.ResetPasswordBody, callbackUrl), user.Email, user.FullName);
+                Mail.AdminInfo = user.PhoneNumber;
+                Mail.Send(Mails.ResetPassword, string.Format(Mails.ResetPasswordBody, callbackUrl), user.Email, user.FullName);
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 

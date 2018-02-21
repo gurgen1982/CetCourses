@@ -207,6 +207,9 @@
   <data name="TimePageMessage" xml:space="preserve">
     <value>Ընտրեք Ձեզ հարմար օրերը և ժամերը․ մենք կզանգահարենք Ձեզ ինչքան հնարավոր է շուտ,  որպեսզի բացենք նոր խումբ Ձեր ընտրած ժամերին համապատասխան</value>
   </data>
+  <data name="UserCreated" xml:space="preserve">
+    <value>Օգտատերը հաջողությամբ ստեղծվեց։ Ձեր էլեկտրոնային հասցեին ուղարկված է նամակ․ խնդրում ենք հաստատել այն։</value>
+  </data>
   <data name="YearId" xml:space="preserve">
     <value>Տարիքային խումբ</value>
   </data>

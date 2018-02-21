@@ -129,7 +129,6 @@ warning 6002: The table/view 'Cet.dbo.qExportData' does not have a primary key d
             <PropertyRef Name="ChildId" />
             <PropertyRef Name="Child Creation Date" />
             <PropertyRef Name="Children Full Name" />
-            <PropertyRef Name="Birth Date" />
             <PropertyRef Name="ClassNo" />
             <PropertyRef Name="Edu Level" />
             <PropertyRef Name="Inactive" />
@@ -141,11 +140,11 @@ warning 6002: The table/view 'Cet.dbo.qExportData' does not have a primary key d
           <Property Name="Phone Number" Type="nvarchar(max)" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="Children Full Name" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="Birth Date" Type="date" Nullable="false" />
+          <Property Name="Birth Date" Type="nvarchar" MaxLength="255" />
           <Property Name="Year Group Name" Type="nvarchar" MaxLength="50" />
           <Property Name="EduGroupName" Type="nvarchar" MaxLength="50" />
           <Property Name="Frequency Description" Type="nvarchar" MaxLength="50" />
-          <Property Name="School Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="School Name" Type="nvarchar" MaxLength="255" />
           <Property Name="ClassNo" Type="int" Nullable="false" />
           <Property Name="Edu Level" Type="int" Nullable="false" />
           <Property Name="Monday" Type="nvarchar" MaxLength="1000" />
@@ -601,7 +600,7 @@ warning 6002: The table/view 'Cet.dbo.qExportData' does not have a primary key d
           <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
           <Property Name="YearId" Type="Int32" />
-          <Property Name="SchoolId" Type="String" />
+          <Property Name="SchoolId" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
           <Property Name="ClassNo" Type="Int32" Nullable="false" />
           <Property Name="FreqId" Type="Int32" />
           <Property Name="GroupId" Type="Int32" />
@@ -780,7 +779,6 @@ warning 6002: The table/view 'Cet.dbo.qExportData' does not have a primary key d
             <End Role="Child" EntitySet="Children" />
           </AssociationSet>
           <FunctionImport Name="ExportData" />
-          <EntitySet Name="qExportData" EntityType="Database.qExportData" />
           <AssociationSet Name="FK_Groups_YearGroups" Association="Database.FK_Groups_YearGroups">
             <End Role="YearGroup" EntitySet="YearGroups" />
             <End Role="Group" EntitySet="Groups" />
@@ -852,6 +850,7 @@ warning 6002: The table/view 'Cet.dbo.qExportData' does not have a primary key d
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRole" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <EntitySet Name="qExportDatas" EntityType="Database.qExportData" />
           </EntityContainer>
         <EntityType Name="DayOfWeek">
           <Key>
@@ -916,43 +915,6 @@ warning 6002: The table/view 'Cet.dbo.qExportData' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="qExportData">
-          <Key>
-            <PropertyRef Name="Children_Full_Name" />
-            <PropertyRef Name="Birth_Date" />
-            <PropertyRef Name="ClassNo" />
-            <PropertyRef Name="Edu_Level" />
-            <PropertyRef Name="Inactive" />
-            <PropertyRef Name="Terms_Accepted" />
-            <PropertyRef Name="Child_Creation_Date" />
-            <PropertyRef Name="ChildId" />
-          </Key>
-          <Property Name="ChildId" Type="Int32" Nullable="false" />
-          <Property Name="Child_Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Parent_Full_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Phone_Number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Children_Full_Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Birth_Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Year_Group_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Edu_Group_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Frequency_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="School_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ClassNo" Type="Int32" Nullable="false" />
-          <Property Name="Edu_Level" Type="Int32" Nullable="false" />
-          <Property Name="Monday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Tuesday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Wednesday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Thursday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Friday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Saturday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Sunday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Trainer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Inactive" Type="Boolean" Nullable="false" />
-          <Property Name="Child_Related_Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Parent_Related_Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Terms_Accepted" Type="Boolean" Nullable="false" />
-        </EntityType>
         <Association Name="FK_Groups_YearGroups">
           <End Type="Database.YearGroup" Role="YearGroup" Multiplicity="0..1" />
           <End Type="Database.Group" Role="Group" Multiplicity="*" />
@@ -1177,6 +1139,42 @@ warning 6002: The table/view 'Cet.dbo.qExportData' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="qExportData">
+          <Key>
+            <PropertyRef Name="ChildId" />
+            <PropertyRef Name="Child_Creation_Date" />
+            <PropertyRef Name="Children_Full_Name" />
+            <PropertyRef Name="ClassNo" />
+            <PropertyRef Name="Edu_Level" />
+            <PropertyRef Name="Inactive" />
+            <PropertyRef Name="Terms_Accepted" />
+          </Key>
+          <Property Name="ChildId" Type="Int32" Nullable="false" />
+          <Property Name="Child_Creation_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Parent_Full_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone_Number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Children_Full_Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Birth_Date" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Year_Group_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EduGroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Frequency_Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="School_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ClassNo" Type="Int32" Nullable="false" />
+          <Property Name="Edu_Level" Type="Int32" Nullable="false" />
+          <Property Name="Monday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Tuesday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Wednesday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Thursday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Friday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Saturday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Sunday" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Trainer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Inactive" Type="Boolean" Nullable="false" />
+          <Property Name="Child_Related_Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Parent_Related_Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Terms_Accepted" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1293,37 +1291,6 @@ warning 6002: The table/view 'Cet.dbo.qExportData' does not have a primary key d
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ExportData" FunctionName="Database.Store.ExportData" />
-          <EntitySetMapping Name="qExportData">
-            <EntityTypeMapping TypeName="Database.qExportData">
-              <MappingFragment StoreEntitySet="qExportData">
-                <ScalarProperty Name="Trainer" ColumnName="Trainer" />
-                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
-                <ScalarProperty Name="Child_Creation_Date" ColumnName="Child Creation Date" />
-                <ScalarProperty Name="Terms_Accepted" ColumnName="Terms Accepted" />
-                <ScalarProperty Name="Parent_Related_Comment" ColumnName="Parent Related Comment" />
-                <ScalarProperty Name="Child_Related_Comment" ColumnName="Child Related Comment" />
-                <ScalarProperty Name="Inactive" ColumnName="Inactive" />
-                <ScalarProperty Name="Sunday" ColumnName="Sunday" />
-                <ScalarProperty Name="Saturday" ColumnName="Saturday" />
-                <ScalarProperty Name="Friday" ColumnName="Friday" />
-                <ScalarProperty Name="Thursday" ColumnName="Thursday" />
-                <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
-                <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
-                <ScalarProperty Name="Monday" ColumnName="Monday" />
-                <ScalarProperty Name="Edu_Level" ColumnName="Edu Level" />
-                <ScalarProperty Name="ClassNo" ColumnName="ClassNo" />
-                <ScalarProperty Name="School_Name" ColumnName="School Name" />
-                <ScalarProperty Name="Frequency_Description" ColumnName="Frequency Description" />
-                <ScalarProperty Name="Edu_Group_Name" ColumnName="EduGroupName" />
-                <ScalarProperty Name="Year_Group_Name" ColumnName="Year Group Name" />
-                <ScalarProperty Name="Birth_Date" ColumnName="Birth Date" />
-                <ScalarProperty Name="Children_Full_Name" ColumnName="Children Full Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Phone_Number" ColumnName="Phone Number" />
-                <ScalarProperty Name="Parent_Full_Name" ColumnName="Parent Full Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BaseHours">
             <EntityTypeMapping TypeName="Database.BaseHours">
               <MappingFragment StoreEntitySet="BaseHours">
@@ -1384,6 +1351,37 @@ warning 6002: The table/view 'Cet.dbo.qExportData' does not have a primary key d
               <MappingFragment StoreEntitySet="AspNetUserRoles">
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="qExportDatas">
+            <EntityTypeMapping TypeName="Database.qExportData">
+              <MappingFragment StoreEntitySet="qExportData">
+                <ScalarProperty Name="Terms_Accepted" ColumnName="Terms Accepted" />
+                <ScalarProperty Name="Parent_Related_Comment" ColumnName="Parent Related Comment" />
+                <ScalarProperty Name="Child_Related_Comment" ColumnName="Child Related Comment" />
+                <ScalarProperty Name="Inactive" ColumnName="Inactive" />
+                <ScalarProperty Name="Trainer" ColumnName="Trainer" />
+                <ScalarProperty Name="Sunday" ColumnName="Sunday" />
+                <ScalarProperty Name="Saturday" ColumnName="Saturday" />
+                <ScalarProperty Name="Friday" ColumnName="Friday" />
+                <ScalarProperty Name="Thursday" ColumnName="Thursday" />
+                <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
+                <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
+                <ScalarProperty Name="Monday" ColumnName="Monday" />
+                <ScalarProperty Name="Edu_Level" ColumnName="Edu Level" />
+                <ScalarProperty Name="ClassNo" ColumnName="ClassNo" />
+                <ScalarProperty Name="School_Name" ColumnName="School Name" />
+                <ScalarProperty Name="Frequency_Description" ColumnName="Frequency Description" />
+                <ScalarProperty Name="EduGroupName" ColumnName="EduGroupName" />
+                <ScalarProperty Name="Year_Group_Name" ColumnName="Year Group Name" />
+                <ScalarProperty Name="Birth_Date" ColumnName="Birth Date" />
+                <ScalarProperty Name="Children_Full_Name" ColumnName="Children Full Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone Number" />
+                <ScalarProperty Name="Parent_Full_Name" ColumnName="Parent Full Name" />
+                <ScalarProperty Name="Child_Creation_Date" ColumnName="Child Creation Date" />
+                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

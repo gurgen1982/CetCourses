@@ -99,17 +99,20 @@ namespace CetCources.Controllers
                     child.EduLevel = User.IsInRole("Admin") ? child.EduLevel : 1;
                     child.FreqId = child.FreqId == 0 ? (child.YearId == yearid ? child.FreqId : null) : child.FreqId;
 
-                    bGroupChanged = child.GroupId != 0;
+                    bGroupChanged = child.GroupId != null && child.GroupId != 0;
 
                     child.GroupId = child.GroupId == 0 ? null : child.GroupId;
                     db.Children.Add(child);
                     db.SaveChanges();
+                    
                     Session[ChildId] = child.ChildId;
                     if (User.IsInRole("Admin"))
                     {
                         Session[ParentId] = child.ParentId;
                     }
-                    await Mail.Send(Mails.ChildAdded, string.Format(Mails.ChildAddedBody, child.AspNetUser.FullName, child.FullName), child.AspNetUser.Email, child.AspNetUser.FullName);
+                    var aspUser = db.AspNetUsers.Find(child.ParentId);
+                    Mail.AdminInfo = aspUser.PhoneNumber;
+                    Mail.Send(Mails.ChildAdded, string.Format(Mails.ChildAddedBody, aspUser.FullName, child.FullName), aspUser.Email, aspUser.FullName);
                 }
                 else
                 {
@@ -149,20 +152,21 @@ namespace CetCources.Controllers
                     if (child.GroupId > 0 && bGroupChanged)
                     {
                         child = db.Children.Find(child.ChildId);
-
-                        await Mail.Send(Mails.AcceptedToGroup,
+                        Mail.AdminInfo = child.AspNetUser.PhoneNumber;
+                        Mail.Send(Mails.AcceptedToGroup,
                              string.Format(Mails.AcceptedToGroupBody, child.AspNetUser.FullName, child.FullName, child.Group.GroupName, ""),
                              child.AspNetUser.Email, child.AspNetUser.FullName);
 
                         if (child.Group.PersonCount <= child.Group.Children.Count)
                         {
-                            Task t = new Task(async () =>
+                            Task t = new Task(() =>
                             {
                                 // send mails to all children in the group!
                                 foreach (var c in child.Group.Children)
                                 {
                                     //await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
-                                    await Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
+                                    Mail.AdminInfo = c.AspNetUser.PhoneNumber;
+                                    Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
                                             string.Format(Mails.GroupIsFullBody, c.AspNetUser.FullName, c.Group.GroupName, c.FullName),
                                             c.AspNetUser.Email, c.AspNetUser.FullName);
                                 }
@@ -326,7 +330,8 @@ namespace CetCources.Controllers
             if (child.Group.PersonCount <= child.Group.Children.Count)
             {
                 //await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
-                await Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
+                Mail.AdminInfo = child.AspNetUser.PhoneNumber;
+                Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
                                   string.Format(Mails.GroupIsFullBody, child.AspNetUser.FullName, child.Group.GroupName, child.FullName),
                                   child.AspNetUser.Email, child.AspNetUser.FullName);
             }
@@ -690,18 +695,22 @@ namespace CetCources.Controllers
 
                 return RedirectToAction("Index", !string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
             }
-
-            var days = db.ChildDayHours(childId);
-            if (id == 0)
-            {
-                ViewBag.NoGroup = true;
-                ViewBag.ChildId = Session[ChildId];
-            }
             else
             {
-                ViewBag.NoGroup = false;
+                return RedirectToAction("Index", !string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
             }
-            return View(days);
+
+            //var days = db.ChildDayHours(childId);
+            //if (id == 0)
+            //{
+            //    ViewBag.NoGroup = true;
+            //    ViewBag.ChildId = Session[ChildId];
+            //}
+            //else
+            //{
+            //    ViewBag.NoGroup = false;
+            //}
+            //return View(days);
         }
 
         [HttpGet]

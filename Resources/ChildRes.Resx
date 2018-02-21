@@ -207,6 +207,9 @@
   <data name="TimePageMessage" xml:space="preserve">
     <value>Select the days and time convinient for you. We will call you as soon as possible in order to create a group for the days and time you have selected.</value>
   </data>
+  <data name="UserCreated" xml:space="preserve">
+    <value>User is successfully created. A confirmation mail is sent to your e-mail address. Please check it and confirm.</value>
+  </data>
   <data name="YearId" xml:space="preserve">
     <value>Year range</value>
   </data>

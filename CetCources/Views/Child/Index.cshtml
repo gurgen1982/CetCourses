@@ -5,9 +5,22 @@
 @{
     ViewBag.Title = ChildRes.List;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var isNewUser = false;
+    if (TempData.ContainsKey("UserCreated"))
+    {
+        isNewUser = true;
+        TempData.Remove("UserCreated");
+    }
 }
 
 <h2 class="text-center">@ChildRes.List</h2>
+
+@if (isNewUser)
+{
+    <h3 style="color:green;background-color:antiquewhite;text-align:center;padding:30px;border-radius:10px;">
+        @ChildRes.UserCreated
+    </h3>
+}
 
 <p class="text-center">
     @Html.ActionLink(CommonRes.AddNew, "Do",
@@ -67,7 +80,7 @@
             <td>
                 @if (!string.IsNullOrEmpty(ViewBag.UserId))
                 {
-                    @(Html.ActionLink(CommonRes.Edit, "Do", new { id = item.ChildId, UserId= ViewBag.UserId })) @:|
+                    @(Html.ActionLink(CommonRes.Edit, "Do", new { id = item.ChildId, UserId = ViewBag.UserId })) @:|
                     @(Html.ActionLink(CommonRes.Details, "Details", new { id = item.ChildId, UserId = ViewBag.UserId })) @:|
                     @(Html.ActionLink(CommonRes.Delete, "Delete", new { id = item.ChildId, UserId = ViewBag.UserId }))
                 }

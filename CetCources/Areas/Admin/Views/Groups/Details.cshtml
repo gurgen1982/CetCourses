@@ -140,3 +140,12 @@
     @Html.ActionLink("Edit", "Do", new { id = Model.GroupId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+@section Scripts {
+    <script>
+        var childRemovedFromGroup = function () {
+            window.location.reload();
+        };
+    </script>
+    }

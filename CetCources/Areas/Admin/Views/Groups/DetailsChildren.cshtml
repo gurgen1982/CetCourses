@@ -44,6 +44,10 @@
             @Html.DisplayFor(modelItem => item.Inactive)
         </td>
         <td>
+            @Ajax.ActionLink("Remove", "RemoveFromGroup",
+                   controllerName: "Groups",
+                   routeValues: new { id = item.ChildId, area = "Admin" }, ajaxOptions: new AjaxOptions {  OnComplete="childRemovedFromGroup" })
+            |
             @Html.ActionLink("Edit", "Do",
                    controllerName: "Child",
                    routeValues: new { id = item.ChildId, area = "" }, htmlAttributes: new { @target= "_blank"})

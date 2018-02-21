@@ -146,12 +146,16 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.EduLevel, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-4">
-                            @Html.EditorFor(model => model.EduLevel, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.EduLevel, new { htmlAttributes = new { @class = "form-control", @min = 1, @max = 8 } })
                         </div>
                         <div class="col-md-6">
                             @Html.ValidationMessageFor(model => model.EduLevel, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                }
+                else
+                {
+                    @Html.Hidden("EduLevel", "1" )
                 }
 
                 <div class="form-group">

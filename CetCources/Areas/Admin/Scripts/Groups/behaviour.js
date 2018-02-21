@@ -13,6 +13,8 @@ $(function () {
         DaysSelected = DaysToEnable;
     }
 
+    $("#btnCompleted").prop("disabled", $("#EduLevel").val() == 8);
+
     $("#YearId").change(function (e) {
         ddl.resetValues();
         if (yearIdFor46Group == e.target.value) {
@@ -37,8 +39,9 @@ $(function () {
     });
     $("#EduLevel").on('change', function () {
         grid.refresh();
+        $("#btnCompleted").prop("disabled", $(this).val() == 8);
     });
-    
+
     //if (isEditMode === true) {
     ddl.disableOther();
     //}
@@ -140,8 +143,8 @@ var grid = {
     kendo: null,
 
     refresh: function () {
-     //   if ($("#YearId").val() != "") { //$("#FreqId").val() != "" &&
-            grid.kendo.dataSource.read();
+        //   if ($("#YearId").val() != "") { //$("#FreqId").val() != "" &&
+        grid.kendo.dataSource.read();
         //}
         //else {
         //    grid.kendo.dataSource.data([]);

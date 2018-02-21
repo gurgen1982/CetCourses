@@ -224,4 +224,20 @@ $(function () {
     if ($("#EduLevel").length > 0) {
         $("#EduLevel").on('change', refreshGroupList);
     }
+
+    $("form").on('submit', function (e) {
+        if ($(this).valid()) {
+            $("#btnGoNext").prop("disabled", true);
+        }
+    });
+    //$("form").bind('ajax:complete', function () {
+
+    //});
 });
+
+//var submitionBegin = function (res) {
+//    $("#btnGoNext").prop("disabled", true);
+//};
+//var submitionComplete = function (res) {
+//    $("#btnGoNext").prop("disabled", false);
+//};

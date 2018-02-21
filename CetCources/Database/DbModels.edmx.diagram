@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="31452808b48f4d57bf99e8b6e501856c" Name="Diagram1" ZoomLevel="100">
+      <Diagram DiagramId="31452808b48f4d57bf99e8b6e501856c" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="Database.Child" Width="1.5" PointX="5.375" PointY="7.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Database.CourseFrequency" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Database.FreeHour" Width="1.5" PointX="8.375" PointY="8" IsExpanded="true" />
@@ -20,7 +20,6 @@
         <EntityTypeShape EntityType="Database.YearGroupDay" Width="1.5" PointX="5.25" PointY="14.625" />
         <AssociationConnector Association="Database.FK_YearGroupDays_YearGroups" />
         <AssociationConnector Association="Database.FK_Children_Parent" />
-        <EntityTypeShape EntityType="Database.qExportData" Width="1.5" PointX="10.375" PointY="0.75" />
         <AssociationConnector Association="Database.FK_Groups_YearGroups" />
         <EntityTypeShape EntityType="Database.BaseHours" Width="1.5" PointX="10.75" PointY="10.375" />
         <EntityTypeShape EntityType="Database.DayHours" Width="1.5" PointX="10.625" PointY="7.25" />
@@ -38,6 +37,7 @@
         <AssociationConnector Association="Database.FK_HourShifts_BaseHours" />
         <EntityTypeShape EntityType="Database.AspNetUserRole" Width="1.5" PointX="4.875" PointY="2.875" />
         <AssociationConnector Association="Database.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" />
+        <EntityTypeShape EntityType="Database.qExportData" Width="1.5" PointX="13.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

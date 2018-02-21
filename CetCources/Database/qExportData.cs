@@ -20,9 +20,9 @@ namespace CetCources.Database
         public string Phone_Number { get; set; }
         public string Email { get; set; }
         public string Children_Full_Name { get; set; }
-        public System.DateTime Birth_Date { get; set; }
+        public string Birth_Date { get; set; }
         public string Year_Group_Name { get; set; }
-        public string Edu_Group_Name { get; set; }
+        public string EduGroupName { get; set; }
         public string Frequency_Description { get; set; }
         public string School_Name { get; set; }
         public int ClassNo { get; set; }

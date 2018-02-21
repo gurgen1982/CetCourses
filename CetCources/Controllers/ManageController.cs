@@ -238,7 +238,8 @@ namespace CetCources.Controllers
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    await Mail.Send(Mails.PasswordChanged,string.Format(Mails.PasswordChangedBody, user.FullName), user.Email, user.FullName, false);
+                    Mail.AdminInfo = user.PhoneNumber;
+                    Mail.Send(Mails.PasswordChanged,string.Format(Mails.PasswordChangedBody, user.FullName), user.Email, user.FullName, false);
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }

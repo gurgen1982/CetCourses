@@ -199,7 +199,8 @@ namespace CetCources.Areas.Admin.Controllers
                         foreach (var chld in childIdList)
                         {
                             var ch = db.Children.Find(chld);
-                            await Mail.Send(Mails.AcceptedToGroup,
+                            Mail.AdminInfo = ch.AspNetUser.PhoneNumber;
+                            Mail.Send(Mails.AcceptedToGroup,
                                 string.Format(Mails.AcceptedToGroupBody, ch.AspNetUser.FullName, ch.FullName, ch.Group.GroupName, group.MailMessage),
                                 ch.AspNetUser.Email, ch.AspNetUser.FullName);
 
@@ -215,7 +216,8 @@ namespace CetCources.Areas.Admin.Controllers
                             //ch.AspNetUser.Email, ch.AspNetUser.FullName);
                             if (isFull)
                             {
-                                await Mail.Send(
+                                Mail.AdminInfo = ch.AspNetUser.PhoneNumber;
+                                Mail.Send(
                                     string.Format(Mails.GroupIsFull, ch.Group.GroupName),//$"Group {ch.Group.GroupName} is full", 
                                     string.Format(Mails.GroupIsFullBody, ch.AspNetUser.FullName, ch.Group.GroupName, ch.FullName),//$"The group <b>{ch.Group.GroupName}</b> to which <b>{ch.FullName}</b> joined is full and is ready to start", 
                                     ch.AspNetUser.Email, ch.AspNetUser.FullName);
@@ -243,7 +245,8 @@ namespace CetCources.Areas.Admin.Controllers
                         {
                             foreach (var ch in grp.Children)
                             {
-                                await Mail.Send(
+                                Mail.AdminInfo = ch.AspNetUser.PhoneNumber;
+                                Mail.Send(
                                       string.Format(Mails.GroupIsFull, ch.Group.GroupName),//$"Group {ch.Group.GroupName} is full", 
                                       string.Format(Mails.GroupIsFullBody, ch.AspNetUser.FullName, ch.Group.GroupName, ch.FullName),//$"The group <b>{ch.Group.GroupName}</b> to which <b>{ch.FullName}</b> joined is full and is ready to start", 
                                       ch.AspNetUser.Email, ch.AspNetUser.FullName);
@@ -306,18 +309,35 @@ namespace CetCources.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Completed(int groupId)
         {
-            //TODO: test. debug.
-            var group = db.Groups.Where(x => x.GroupId == groupId).First();
+            var group = db.Groups.Where(x => x.GroupId == groupId).FirstOrDefault();
+            if (group==null || group.EduLevel == 8) return null;
             group.EduLevel += 1;
             db.Entry(group).State = EntityState.Modified;
             var children = group.Children;
             foreach (var child in children)
             {
                 child.EduLevel += 1;
+                db.Entry(child).State = EntityState.Modified;
+                db.SaveChanges();
             }
-            db.SaveChanges();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        public bool RemoveFromGroup(int? id)
+        {
+            try
+            {
+                var child = db.Children.Find(id);
+                child.GroupId = null;
+                db.Entry(child).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch 
+            {
+                return false;
+            }
+            return true;
         }
 
         private void SetViewBagData(Group group)

@@ -11,7 +11,8 @@ namespace CetCources
 {
     public class Mail
     {
-        public async static Task Send(string subject, string body, string to, string toName = "", bool sendToAdmin = true)
+        public static string AdminInfo { get; set; }
+        public static void Send(string subject, string body, string to, string toName = "", bool sendToAdmin = true)
         {
             try
             {
@@ -44,7 +45,7 @@ namespace CetCources
                           using (var message = new MailMessage(fromAddress, sendToAddress)
                           {
                               Subject = subject + (isAdmin ? " (Copy of mail for Admin)" : ""),
-                              Body = body + (isAdmin ? $"<br /><hr /> Original mail for:<b> {toName} <{to}> </b>" : ""),
+                              Body = body + (isAdmin ? $"<br /><hr /> Original mail for <b> {toName}</b> contact info: {AdminInfo}, {to}" : ""),
                               IsBodyHtml = true,
                               HeadersEncoding = Encoding.UTF8,
                               SubjectEncoding = Encoding.UTF8,
@@ -54,25 +55,28 @@ namespace CetCources
                               await smtp.SendMailAsync(message);
                           }
                       }
-                      catch { }
+                      catch (Exception ex) { }
                   };
 
-                await send(toAddress, false);
-                if (sendToAdmin)
+                Task t = new Task(async () =>
                 {
-                    var db = new Database.dbEntities();
-                    var admins = from roles in db.AspNetUserRoles
-                                 join users in db.AspNetUsers on roles.UserId equals users.Id
-                                 where roles.RoleId == "1"
-                                 select users;
-
-                    foreach (var admin in admins)
+                    await send(toAddress, false);
+                    if (sendToAdmin)
                     {
-                        var toAdmin = new MailAddress(admin.Email, admin.FullName);
-                        await send(toAdmin, true);
-                    }
-                }
+                        var db = new Database.dbEntities();
+                        var admins = from roles in db.AspNetUserRoles
+                                     join users in db.AspNetUsers on roles.UserId equals users.Id
+                                     where roles.RoleId == "1"
+                                     select users;
 
+                        foreach (var admin in admins)
+                        {
+                            var toAdmin = new MailAddress(admin.Email, admin.FullName);
+                            await send(toAdmin, true);
+                        }
+                    }
+                });
+                t.Start();
             }
             catch { }
         }

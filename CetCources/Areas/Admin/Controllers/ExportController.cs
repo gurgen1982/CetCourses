@@ -31,7 +31,7 @@ namespace CetCources.Areas.Admin.Controllers
                 // to create xls file
                 try
                 {
-                    var bytes = ExportTo.ExcelFileNP(db.qExportData.ToList());
+                    var bytes = ExportTo.ExcelFileNP(db.qExportDatas.ToList());
 
                     return File(bytes, "application/vnd.ms-excel", "Export.xls");
                     

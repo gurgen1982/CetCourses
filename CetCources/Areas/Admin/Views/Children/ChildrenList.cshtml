@@ -72,7 +72,11 @@
                 @Html.DisplayFor(modelItem => item.CourseFrequency.FrequencyDescription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Group.GroupName)
+                @if (item.Group != null)
+                {
+                    @Html.ActionLink(item.Group.GroupName, "Details", controllerName: "Groups", routeValues: new { id = item.GroupId }, htmlAttributes: null)
+                }
+                @*@Html.DisplayFor(modelItem => item.Group.GroupName)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SchoolId @*School.SchoolName*@)

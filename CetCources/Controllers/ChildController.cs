@@ -98,13 +98,13 @@ namespace CetCources.Controllers
                     child.CreationDate = DateTime.Now;
                     child.EduLevel = User.IsInRole("Admin") ? child.EduLevel : 1;
                     child.FreqId = child.FreqId == 0 ? (child.YearId == yearid ? child.FreqId : null) : child.FreqId;
-
+                    if (child.Inactive) child.GroupId = null;
                     bGroupChanged = child.GroupId != null && child.GroupId != 0;
 
                     child.GroupId = child.GroupId == 0 ? null : child.GroupId;
                     db.Children.Add(child);
                     db.SaveChanges();
-                    
+
                     Session[ChildId] = child.ChildId;
                     if (User.IsInRole("Admin"))
                     {
@@ -124,7 +124,10 @@ namespace CetCources.Controllers
 
                     bGroupChanged = dbChild.GroupId != child.GroupId;
 
+                    if (child.Inactive) child.GroupId = null;
+
                     dbChild.GroupId = child.GroupId == 0 ? null : child.GroupId;
+
                     dbChild.SchoolId = child.SchoolId;
                     dbChild.ClassNo = child.ClassNo;
                     dbChild.Inactive = child.Inactive;
@@ -146,36 +149,41 @@ namespace CetCources.Controllers
 
                 // insert dates and times according to group
                 AddTimesFromGroup(db, child);
-
-                if (child.Inactive || (child.GroupId != null && child.GroupId > 0))
+                if (child.Inactive)
+                {
+                    return RedirectToAction("Index", !string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
+                }
+                if (!child.Inactive && child.GroupId != null && child.GroupId > 0)
                 {
                     if (child.GroupId > 0 && bGroupChanged)
                     {
-                        child = db.Children.Find(child.ChildId);
-                        Mail.AdminInfo = child.AspNetUser.PhoneNumber;
+                        var childChild = db.Children.Find(child.ChildId);
+                        //var childGroup = db.Groups.First(x => x.GroupId == child.GroupId);
+                        //var childAspNetUser = db.AspNetUsers.FirstOrDefault(x => x.Id == child.ParentId);
+                        Mail.AdminInfo = childChild.AspNetUser.PhoneNumber;
                         Mail.Send(Mails.AcceptedToGroup,
-                             string.Format(Mails.AcceptedToGroupBody, child.AspNetUser.FullName, child.FullName, child.Group.GroupName, ""),
-                             child.AspNetUser.Email, child.AspNetUser.FullName);
+                             string.Format(Mails.AcceptedToGroupBody, childChild.AspNetUser.FullName, childChild.FullName, childChild.Group.GroupName, ""),
+                             childChild.AspNetUser.Email, childChild.AspNetUser.FullName);
 
-                        if (child.Group.PersonCount <= child.Group.Children.Count)
+                        if (childChild.Group.PersonCount <= childChild.Group.Children.Count)
                         {
-                            Task t = new Task(() =>
+
+                            // send mails to all children in the group!
+                            //var grpAll = db.Groups.Find(child.GroupId);
+                            foreach (var chCh in childChild.Group.Children)
                             {
-                                // send mails to all children in the group!
-                                foreach (var c in child.Group.Children)
-                                {
-                                    //await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
-                                    Mail.AdminInfo = c.AspNetUser.PhoneNumber;
-                                    Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
-                                            string.Format(Mails.GroupIsFullBody, c.AspNetUser.FullName, c.Group.GroupName, c.FullName),
-                                            c.AspNetUser.Email, c.AspNetUser.FullName);
-                                }
-                            });
-                            t.Start();
+                                var cc = db.Children.First(x => x.ChildId == chCh.ChildId);
+                                //await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
+                                Mail.AdminInfo = cc.AspNetUser.PhoneNumber;
+                                Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
+                                        string.Format(Mails.GroupIsFullBody, cc.AspNetUser.FullName, cc.Group.GroupName, cc.FullName),
+                                        cc.AspNetUser.Email, cc.AspNetUser.FullName);
+                            }
+
                         }
                     }
 
-                    return RedirectToAction("Index", string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
+                    return RedirectToAction("Index", !string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
                 }
                 else
                 {
@@ -197,7 +205,7 @@ namespace CetCources.Controllers
         public ActionResult GetGroupList(int? YearId, int? FreqId, int? ChildId, int? eduLevel)
         {
             var childGroupId = 0;
-            var list = db.Groups.Where(x => !x.Inactive);
+            var list = db.Groups.Where(x => !x.Inactive && x.Children.Count < x.PersonCount);
 
             if (YearId.HasValue && YearId > 0)
             {
@@ -279,7 +287,7 @@ namespace CetCources.Controllers
             var id = Session[ChildId];
             if (id == null)
             {
-                return RedirectToAction("Index", string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
+                return RedirectToAction("Index", !string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
             }
             Child child = db.Children.Find(id);
             if (child == null)
@@ -309,7 +317,7 @@ namespace CetCources.Controllers
             var childId = Session[ChildId];
             if (childId == null)
             {
-                return RedirectToAction("Index", string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
+                return RedirectToAction("Index", !string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
             }
             var child = db.Children.Find(childId);
             if (child == null)
@@ -326,17 +334,26 @@ namespace CetCources.Controllers
             // insert dates and times according to group
             AddTimesFromGroup(db, child);
 
+            Mail.AdminInfo = child.AspNetUser.PhoneNumber;
+            Mail.Send(Mails.AcceptedToGroup,
+                              string.Format(Mails.AcceptedToGroupBody, child.AspNetUser.FullName, child.FullName, child.Group.GroupName, string.Empty),
+                              child.AspNetUser.Email, child.AspNetUser.FullName);
+
             child = db.Children.Find(child.ChildId);
             if (child.Group.PersonCount <= child.Group.Children.Count)
             {
                 //await Mail.Send($"Group {child.Group.GroupName} is full", $"The group <b>{child.Group.GroupName}</b> to which <b>{child.FullName}</b> joined is full and is ready to start", child.AspNetUser.Email, child.AspNetUser.FullName);
-                Mail.AdminInfo = child.AspNetUser.PhoneNumber;
-                Mail.Send(string.Format(Mails.GroupIsFull, child.Group.GroupName),
-                                  string.Format(Mails.GroupIsFullBody, child.AspNetUser.FullName, child.Group.GroupName, child.FullName),
-                                  child.AspNetUser.Email, child.AspNetUser.FullName);
+
+                foreach (var ch in child.Group.Children)
+                {
+                    Mail.AdminInfo = ch.AspNetUser.PhoneNumber;
+                    Mail.Send(string.Format(Mails.GroupIsFull, ch.Group.GroupName),
+                                      string.Format(Mails.GroupIsFullBody, ch.AspNetUser.FullName, ch.Group.GroupName, ch.FullName),
+                                      ch.AspNetUser.Email, ch.AspNetUser.FullName);
+                }
             }
 
-            return RedirectToAction("Index", string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
+            return RedirectToAction("Index", !string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
         }
 
         /// <summary>
@@ -404,7 +421,7 @@ namespace CetCources.Controllers
             var groups = db.Groups.Where(x => x.YearId == child.YearId
                                         //&& x.FreqId == child.FreqId 
                                         && !x.Inactive && x.EduLevel == child.EduLevel
-                                        /*&& x.Children.Count < x.PersonCount*/)
+                                        && x.Children.Count < x.PersonCount)
                 .Include(g => g.CourseFrequency)
                 .Include(g => g.HourShifts_Sun)
                 .Include(g => g.HourShifts_Mon)
@@ -527,7 +544,7 @@ namespace CetCources.Controllers
         {
             if (Session[ChildId] == null)
             {
-                return RedirectToAction("Index", string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
+                return RedirectToAction("Index", !string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
             }
             // get childId from session
             var childId = Convert.ToInt32(Session[ChildId]);
@@ -556,7 +573,7 @@ namespace CetCources.Controllers
             // check if the session still exists
             if (Session[ChildId] == null)
             {
-                return RedirectToAction("Index", string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
+                return RedirectToAction("Index", !string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
             }
             // get childId from session
             var childId = Convert.ToInt32(Session[ChildId]);
@@ -718,7 +735,7 @@ namespace CetCources.Controllers
         {
             if (Session[ChildId] == null)
             {
-                return RedirectToAction("Index", string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
+                return RedirectToAction("Index", !string.IsNullOrEmpty(Session[ParentId] as string) ? new { userid = Session[ParentId] } : null);
             }
             var child = db.Children.Find(Session[ChildId]);
             return View(child);
@@ -978,6 +995,14 @@ namespace CetCources.Controllers
                     ViewBag.Parent = parent.FullName;
                 }
             }
+            ViewBag.GroupIsFull = false;
+            var grpCh = db.Groups.Find(child?.GroupId);
+            if (grpCh != null)
+            {
+                ViewBag.GroupIsFull = !grpCh.Inactive && grpCh.PersonCount <= grpCh.Children.Count;
+            }
+
+
         }
     }
 }

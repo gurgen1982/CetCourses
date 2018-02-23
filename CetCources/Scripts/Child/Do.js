@@ -80,6 +80,7 @@ $(function () {
     });
 
     var refreshGroupList = function () {
+        if (disableFullGroup == 0) return;
         if ($("#YearId").val() != "" && $("#FreqId").val() != "") {
             var group = $("#GroupId").data("kendoDropDownList");
             group.dataSource.read();
@@ -183,6 +184,9 @@ $(function () {
         },
     });
 
+    var groups = $("#GroupId").data('kendoDropDownList');
+    groups.enable(disableFullGroup);
+
     $("#btnGoNext").click(function () {
         var childId = $("#ChildId").val();
         if (childId == undefined || childId == null || childId == "") {
@@ -226,6 +230,9 @@ $(function () {
     }
 
     $("form").on('submit', function (e) {
+        if (disableFullGroup == 0) {
+            groups.enable(1);
+        }
         if ($(this).valid()) {
             $("#btnGoNext").prop("disabled", true);
         }

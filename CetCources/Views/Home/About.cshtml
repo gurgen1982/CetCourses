@@ -4,5 +4,12 @@
 }
 <h2>@ViewBag.Title.</h2>
 @*<h3>@ViewBag.Message</h3>*@
-
+@{
+    var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+    var langIsEng = culture.Name.ToLower().Contains("en-us");
+}
 <h4 style="text-align: justify;line-height: 1.5;">@AboutRes.AboutFullMessage</h4>
+
+<div style="text-align: justify;line-height: 1.5;font-size:large">
+    @Html.Partial(langIsEng ? "_termsEng" : "_termsHy")
+</div>

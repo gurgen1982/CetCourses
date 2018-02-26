@@ -96,6 +96,8 @@ namespace CetCources.Models
         public string Comments { get; set; }
 
         [Display(Name = "TermsAccepted", ResourceType = typeof(AccountRes))]
+        //[Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(CommonRes))]
+       // [Range(typeof(bool), "true", "true", ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(CommonRes))]
         public bool TermsAccepted { get; set; }
     }
 

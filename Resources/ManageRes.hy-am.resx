@@ -153,6 +153,15 @@
   <data name="CurrentPassword" xml:space="preserve">
     <value>Ընթացիկ գաղտնաբառը</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Խմբագրել</value>
+  </data>
+  <data name="Editing" xml:space="preserve">
+    <value>Խմբագրում</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Խմբագրեք Ձեր անձնական տվյալները</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Էլ․ փոստ</value>
   </data>
@@ -194,6 +203,9 @@
   </data>
   <data name="PasswordMissmatchMessage" xml:space="preserve">
     <value>Նոր գաղտնաբառը չի համընկնում կրկնվող գաղտնաբառի հետ</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Անձնական տվյալներ`</value>
   </data>
   <data name="RemoveLoginSuccess" xml:space="preserve">
     <value>The external login was removed.</value>

@@ -667,6 +667,7 @@
     <Content Include="Views\Home\Terms.cshtml" />
     <Content Include="Views\Shared\_termsEng.cshtml" />
     <Content Include="Views\Shared\_termsHy.cshtml" />
+    <Content Include="Views\Manage\EditProfile.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

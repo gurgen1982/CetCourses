@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CetCources.Models;
 using Resources;
+using CetCources.Database;
 
 namespace CetCources.Controllers
 {
@@ -16,7 +17,7 @@ namespace CetCources.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private dbEntities db;
         public ManageController()
         {
         }
@@ -74,6 +75,34 @@ namespace CetCources.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
+        }
+
+        public ActionResult EditProfile()
+        {
+            var userId = User.Identity.GetUserId();
+            db = new dbEntities();
+            var user = db.AspNetUsers.Find(userId);
+            return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProfile(AspNetUser user)
+        {
+            if (ModelState.IsValid)
+            {
+                db = new dbEntities();
+                var userId = User.Identity.GetUserId();
+                var dbUser = db.AspNetUsers.Find(userId);
+                dbUser.FullName = user.FullName;
+                dbUser.Comments = user.Comments;
+                dbUser.PhoneNumber = user.PhoneNumber;
+
+                db.Entry(dbUser).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(user);
         }
 
         //

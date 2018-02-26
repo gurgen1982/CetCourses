@@ -133,6 +133,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please read and accept the terms!.
+        /// </summary>
+        public static string PleaseAcceptTerms {
+            get {
+                return ResourceManager.GetString("PleaseAcceptTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to refresh.
         /// </summary>
         public static string refresh {

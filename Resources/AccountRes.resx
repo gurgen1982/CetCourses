@@ -162,4 +162,7 @@
   <data name="PhoneNumberMinMaxMessage" xml:space="preserve">
     <value>Must contain at least 6 symbol</value>
   </data>
+  <data name="PleaseAcceptTerms" xml:space="preserve">
+    <value>Please read and accept the terms!</value>
+  </data>
 </root>

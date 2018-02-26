@@ -162,4 +162,7 @@
   <data name="PhoneNumberMinMaxMessage" xml:space="preserve">
     <value>Պետք է պարունակի առնվազն 6 թիվ</value>
   </data>
+  <data name="PleaseAcceptTerms" xml:space="preserve">
+    <value>Խնդրում ենք կարդացեք և ընդունեք պայմանները</value>
+  </data>
 </root>

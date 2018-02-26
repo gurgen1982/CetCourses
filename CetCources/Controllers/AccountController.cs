@@ -153,6 +153,11 @@ namespace CetCources.Controllers
         [CaptchaVerify("CaptchaInvalid", resourceType: typeof(AccountRes))]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            if (!model.TermsAccepted)
+            {
+                ModelState.AddModelError("TermsAccepted", AccountRes.PleaseAcceptTerms);
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser

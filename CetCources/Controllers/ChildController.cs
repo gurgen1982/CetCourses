@@ -136,6 +136,7 @@ namespace CetCources.Controllers
                     {
                         dbChild.EduLevel = child.EduLevel;
                     }
+                    if (dbChild.EduLevel == 0) dbChild.EduLevel = 1;
                     //child.ParentId = User.Identity.GetUserId();
 
                     db.Entry(dbChild).State = EntityState.Modified;

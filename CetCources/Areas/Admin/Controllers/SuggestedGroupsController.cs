@@ -140,7 +140,9 @@ namespace CetCources.Areas.Admin.Controllers
         public async Task<JsonResult> Accept(int id, int id2)
         {
             var child = db.Children.Find(id);
+            var grp = db.Groups.Find(id2);
             child.GroupId = id2;
+            child.FreqId = grp?.FreqId ?? child.FreqId;
             db.Entry(child).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
 

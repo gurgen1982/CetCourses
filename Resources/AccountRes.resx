@@ -139,7 +139,7 @@
     <value>refresh</value>
   </data>
   <data name="RegisterAsNew" xml:space="preserve">
-    <value>Register as a new user</value>
+    <value>Register New User</value>
   </data>
   <data name="Remember" xml:space="preserve">
     <value>Remember me?</value>
@@ -164,5 +164,8 @@
   </data>
   <data name="PleaseAcceptTerms" xml:space="preserve">
     <value>Please read and accept the terms!</value>
+  </data>
+  <data name="MailNotConfirmed" xml:space="preserve">
+    <value>Please confirm your email before login</value>
   </data>
 </root>

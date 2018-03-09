@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please confirm your email before login.
+        /// </summary>
+        public static string MailNotConfirmed {
+            get {
+                return ResourceManager.GetString("MailNotConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Password {
@@ -151,7 +160,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register as a new user.
+        ///   Looks up a localized string similar to Register New User.
         /// </summary>
         public static string RegisterAsNew {
             get {

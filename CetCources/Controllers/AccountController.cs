@@ -12,6 +12,7 @@ using CetCources.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using CaptchaMvc.Attributes;
 using Resources;
+using CetCources.Database;
 
 namespace CetCources.Controllers
 {
@@ -75,7 +76,13 @@ namespace CetCources.Controllers
             {
                 return View(model);
             }
-
+            var db = new dbEntities();
+            var dbUser = db.AspNetUsers.FirstOrDefault(x => x.Email.Equals(model.Email));
+            if(dbUser!=null && !dbUser.EmailConfirmed)
+            {
+                ModelState.AddModelError("Email", AccountRes.MailNotConfirmed);
+                return View(model);
+            }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -196,8 +203,7 @@ namespace CetCources.Controllers
 
                     if (User!= null && !User.IsInRole("Admin"))
                     {
-
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         // Send an email with this link
                         var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
@@ -208,7 +214,8 @@ namespace CetCources.Controllers
                             string.Format(Mails.ConfirmAccountBody, callbackUrl),//"Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>", 
                             user.Email, user.FullName, true);
                         TempData.Add("UserCreated", 1);
-                        return RedirectToAction("Index", "Child");
+                        //return RedirectToAction("Index", "Child");
+                        return View();
                     }
                     else
                     {

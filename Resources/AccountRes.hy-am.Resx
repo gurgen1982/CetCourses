@@ -139,7 +139,7 @@
     <value>թարմացնել</value>
   </data>
   <data name="RegisterAsNew" xml:space="preserve">
-    <value>Գրանցվել որպես նոր օգտատեր</value>
+    <value>Գրանցել Նոր Օգտատեր</value>
   </data>
   <data name="Remember" xml:space="preserve">
     <value>Հիշե՞լ ինձ</value>
@@ -148,7 +148,7 @@
     <value>Ընդունում եմ պայմանները</value>
   </data>
   <data name="UserLocalAccount" xml:space="preserve">
-    <value>Օգտագործեք Ձեզ էլ․փոստի հասցեն ու գաղտնաբառը</value>
+    <value>Օգտագործեք Ձեր էլ․փոստի հասցեն ու գաղտնաբառը</value>
   </data>
   <data name="YourAnswer" xml:space="preserve">
     <value>Ձեր պատասխանը</value>
@@ -164,5 +164,8 @@
   </data>
   <data name="PleaseAcceptTerms" xml:space="preserve">
     <value>Խնդրում ենք կարդացեք և ընդունեք պայմանները</value>
+  </data>
+  <data name="MailNotConfirmed" xml:space="preserve">
+    <value>Խնդրում ենք հաստատել Ձեր էլ․ հասցեն մուտք լինելուց առաջ</value>
   </data>
 </root>

@@ -5,22 +5,10 @@
 @{
     ViewBag.Title = ChildRes.List;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var isNewUser = false;
-    if (TempData.ContainsKey("UserCreated"))
-    {
-        isNewUser = true;
-        TempData.Remove("UserCreated");
-    }
 }
 
 <h2 class="text-center">@ChildRes.List</h2>
 
-@if (isNewUser)
-{
-    <h3 style="color:green;background-color:antiquewhite;text-align:center;padding:30px;border-radius:10px;">
-        @ChildRes.UserCreated
-    </h3>
-}
 
 <p class="text-center">
     @Html.ActionLink(CommonRes.AddNew, "Do",

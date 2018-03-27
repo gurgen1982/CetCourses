@@ -102,6 +102,11 @@ namespace CetCources.Controllers
                     bGroupChanged = child.GroupId != null && child.GroupId != 0;
 
                     child.GroupId = child.GroupId == 0 ? null : child.GroupId;
+                    if(child.GroupId!= null)
+                    {
+                        var g = db.Groups.Find(child.GroupId);
+                        child.FreqId = g.FreqId;
+                    }
                     db.Children.Add(child);
                     db.SaveChanges();
 
@@ -127,6 +132,11 @@ namespace CetCources.Controllers
                     if (child.Inactive) child.GroupId = null;
 
                     dbChild.GroupId = child.GroupId == 0 ? null : child.GroupId;
+                    if (dbChild.GroupId != null)
+                    {
+                        var g = db.Groups.Find(child.GroupId);
+                        dbChild.FreqId = g.FreqId;
+                    }
 
                     dbChild.SchoolId = child.SchoolId;
                     dbChild.ClassNo = child.ClassNo;
@@ -212,11 +222,13 @@ namespace CetCources.Controllers
             {
                 list = list.Where(x => x.YearId == YearId);
             }
-            //if (FreqId.HasValue && FreqId > 0)
-            //{
-            //    list = list.Where(x => x.FreqId == FreqId);
-            //}
-
+            if (!User.IsInRole("Admin"))
+            {
+                if (FreqId.HasValue && FreqId > 0)
+                {
+                    list = list.Where(x => x.FreqId == FreqId);
+                }
+            }
             if (ChildId.HasValue && ChildId > 0)
             {
                 var child = db.Children.Find(ChildId);
@@ -301,7 +313,7 @@ namespace CetCources.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Groups([Bind(Include = "GroupId")]Child childGrp)
+        public ActionResult Groups([Bind(Include = "GroupId")]Child childGrp)
         {
             if (childGrp == null || childGrp.GroupId == 0)
             {
@@ -393,6 +405,7 @@ namespace CetCources.Controllers
                        {
                            GroupName = g.GroupName,
                            FrequencyDescription = g.CourseFrequency.FrequencyDescription,
+                           FreqId = g.CourseFrequency.FreqId,
                            Sunday = g.HourShifts_Sun.HourShift,
                            Monday = g.HourShifts_Mon.HourShift,
                            Tuesday = g.HourShifts_Tue.HourShift,

@@ -30,4 +30,24 @@ $(function () {
     });
 
     $("#btnSubmit").prop('disabled', true);
+    if (isAdmin == false) {
+        var confirmed = false;
+        $("form").on('submit', function (e) {
+            if (confirmed == true) { return true; }
+
+            if (childFreqId != "" && currentItem.FreqId != parseInt(childFreqId)) {
+                e.preventDefault();
+                e.stopPropagation();
+                kendo.confirm(confirmationMessage)
+                       .done(function () {
+                           confirmed = true;
+                           $("form").submit();
+                       })
+                       .fail(function () {
+                           confirmed = false;
+                       });
+                $(".k-confirm .k-dialog-title").html("Confirmation");
+            }
+        });
+    }
 });

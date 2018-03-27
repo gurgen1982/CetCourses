@@ -144,6 +144,9 @@
   <data name="CreationDate" xml:space="preserve">
     <value>Creation Date</value>
   </data>
+  <data name="DifferentFreqs" xml:space="preserve">
+    <value>You are about to join to the group with a different frequency. Continue?</value>
+  </data>
   <data name="EduLevel" xml:space="preserve">
     <value>Education Level</value>
   </data>

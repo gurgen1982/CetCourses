@@ -144,6 +144,9 @@
   <data name="CreationDate" xml:space="preserve">
     <value>Ստեղծվել է</value>
   </data>
+  <data name="DifferentFreqs" xml:space="preserve">
+    <value>Դուք պատրաստվում եք միանալ խմբին, որի հաճախականությունը տարբերվում է Ձեր ընտրածից։ Շարունակե՞լ</value>
+  </data>
   <data name="EduLevel" xml:space="preserve">
     <value>Ուսման փուլ</value>
   </data>

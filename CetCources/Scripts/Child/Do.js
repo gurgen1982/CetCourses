@@ -228,7 +228,7 @@ $(function () {
     if ($("#EduLevel").length > 0) {
         $("#EduLevel").on('change', refreshGroupList);
     }
-
+    
     $("form").on('submit', function (e) {
         if (disableFullGroup == 0) {
             groups.enable(1);

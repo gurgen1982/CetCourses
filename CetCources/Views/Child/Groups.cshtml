@@ -44,10 +44,10 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         var actionUrl = '@Url.Action("GroupListData", controllerName: "Child")';
+        var childFreqId = '@Model.FreqId';
+        var confirmationMessage = '@ChildRes.DifferentFreqs';
+        var isAdmin = @(User.IsInRole("Admin")? "true": "false");
     </script>
-
-    <script src="~/Scripts/Child/ChildGroupBehaviour.js"></script>
-
     <script type="text/x-kendo-template" id="groupTemplate">
         <div class="group">
             <h3> #:GroupName# </h3>
@@ -89,6 +89,8 @@
             </table>
         </div>
     </script>
+    @*<script src="~/Scripts/Child/ChildGroupBehaviour.js"></script>*@
+    @Scripts.Render("~/bundles/childGroup")
 }
 
 <style>

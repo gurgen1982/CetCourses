@@ -142,6 +142,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are about to join to the group with a different frequency. Continue?.
+        /// </summary>
+        public static string DifferentFreqs {
+            get {
+                return ResourceManager.GetString("DifferentFreqs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Education Level.
         /// </summary>
         public static string EduLevel {
